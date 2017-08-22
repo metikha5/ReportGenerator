@@ -41,3 +41,11 @@
     }
   }
 </script>
+
+<style>
+  #yField {
+    resize: none;
+    height: 150px;
+    max-height: 200px;
+  }
+</style>

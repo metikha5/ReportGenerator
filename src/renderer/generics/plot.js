@@ -9,6 +9,9 @@ export default class Plot {
     this.curves = []
     if (curves) {
       for (let c of curves) {
+        if (c.title === undefined) {
+          c.title = `Curve ${this.curves.length + 1}`
+        }
         this.curves.push(new Curve(c.title, c.x, c.y, c.aggregate, c.style))
       }
     }

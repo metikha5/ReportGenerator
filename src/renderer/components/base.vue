@@ -26,40 +26,47 @@
 
 
 <script>
+  import EventBus from './eventBus'
   import PlotView from './plot'
   import CurveView from './curve'
-  import Plot from '../elements/plot'
+  import PlotStore from '../stores/plots'
 
   export default {
     name: 'BaseView',
     data() {
       return {
-        plots: [],
-        modified: false,  // To implement
+        plots: PlotStore.state.plots,
+//        modified: PlotStore.state.plotsModified, TODO: Not used ?
         selectedPlot: null
       }
     },
     watch: {
       'plots': {
-        handler: function() { this.modified = true },
+        handler: function() {
+          PlotStore.state.plotsModified = true
+        },
         deep: true
       }
     },
+    mounted() {
+      EventBus.$on('basicReset', this.basicReset)
+      EventBus.$on('plotsUpdated', this.syncPlots)  // TODO: find a better way
+    },
     methods: {
       addPlot() {
-        let p = new Plot()
-        p.title = `Plot ${this.plots.length + 1}`
-        this.plots.push(p)
+        PlotStore.addPlot()
       },
 
       selectPlot(plot) {
         this.selectedPlot = plot
       },
 
-      resetApp() {
-        this.plots = []
-        this.modified = false
+      basicReset() {
         this.selectedPlot = null
+      },
+
+      syncPlots() {
+        this.plots = PlotStore.state.plots
       }
     },
     components: {

@@ -2,6 +2,12 @@
   <div>
     <form class="form-horizontal" style="margin-top: 42px">
       <div class="form-group">
+        <label for="curveTitle" class="col-sm-2 control-label">Title</label>
+        <div class="col-sm-8">
+          <input id="curveTitle" type="text" class="form-control" v-model="curve.title">
+        </div>
+      </div>
+      <div class="form-group">
         <label for="xField" class="col-sm-2 control-label">X axis</label>
         <div class="col-sm-8">
           <input id="xField" type="text" class="form-control" v-model="curve.x" disabled>

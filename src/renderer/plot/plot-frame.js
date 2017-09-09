@@ -1,4 +1,4 @@
-import Curve from './curve'
+import Curve from '../curve/curve-frame'
 
 export default class Plot {
   constructor(title=null, dateBegin=null, dateEnd=null, curves=null) {

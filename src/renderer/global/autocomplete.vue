@@ -4,7 +4,7 @@
 
 <script>
   export default {
-    name: 'AutocompleteField',
+    name: 'Autocomplete',
     props: {
       value: String
     },

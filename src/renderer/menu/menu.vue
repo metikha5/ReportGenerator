@@ -39,10 +39,10 @@
 <script>
   import path from 'path'
 
-  import EventBus from './eventBus'
-  import FileHandler from '../generics/file-handler'
-  import Plots from '../stores/plots'
-  import Notifications from '../stores/notifications'
+  import EventBus from '../global/event-bus'
+  import FileHandler from '../global/file-handler'
+  import Plots from '../plot/plots.store'
+  import Notifications from '../global/notifications'
 
   export default {
     name: 'MenuView',

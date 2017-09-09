@@ -25,13 +25,13 @@
 <script>
   import { spawn } from 'child_process'
 
-  import EventBus from './eventBus'
-  import Settings from '../stores/settings'
-  import FileHandler from '../generics/file-handler'
-  import Plots from '../stores/plots'
+  import EventBus from '../global/event-bus'
+  import Settings from '../settings/settings.store'
+  import FileHandler from '../global/file-handler'
+  import Plots from '../plot/plots.store'
 
   export default {
-    name: 'scriptExecution',
+    name: 'pythonGenerator',
     data() {
       return {
         childProccess: null,

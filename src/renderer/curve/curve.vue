@@ -17,7 +17,7 @@
         <label for="yField" class="col-sm-2 control-label">Y axis</label>
         <div class="col-sm-8">
           <!--<textarea id="yField" class="form-control" v-model="curve.y" rows="15" cols="50"></textarea>-->
-          <autocomplete-field id="yField" v-model="curve.y"></autocomplete-field>
+          <autocomplete id="yField" v-model="curve.y"></autocomplete>
         </div>
       </div>
       <div class="form-group">
@@ -38,7 +38,7 @@
 
 
 <script>
-  import autocompleteField from './autocompleteField'
+  import autocomplete from '../global/autocomplete'
 
   export default {
     name: 'CurveView',
@@ -48,7 +48,7 @@
     computed: {
       curve() { return this.value }
     },
-    components: {autocompleteField}
+    components: {autocomplete}
   }
 </script>
 

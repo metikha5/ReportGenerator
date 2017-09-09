@@ -26,10 +26,10 @@
 
 
 <script>
-  import EventBus from './eventBus'
-  import PlotView from './plot'
-  import CurveView from './curve'
-  import PlotStore from '../stores/plots'
+  import EventBus from '../global/event-bus'
+  import CurveView from '../curve/curve.vue'
+  import PlotView from '../plot/plot'
+  import PlotStore from '../plot/plots.store'
 
   export default {
     name: 'BaseView',

@@ -2,8 +2,8 @@
  * Created by BREMEC Michael <michael@bremec.fr> on 8/23/17
  */
 
-import Plot from '../generics/plot'
-import EventBus from '../components/eventBus'
+import Plot from './plot-frame'
+import EventBus from '../global/event-bus'
 
 export default {
   state: {

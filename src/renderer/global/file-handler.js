@@ -7,7 +7,7 @@
 import { remote } from 'electron'
 import fs from 'fs'
 import path from 'path'
-import Notifications from '../stores/notifications'
+import Notifications from '../global/notifications'
 
 const dialog = remote.dialog
 

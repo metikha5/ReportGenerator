@@ -2,21 +2,21 @@
   <div id="app">
     <menu-view></menu-view>
     <base-view></base-view>
-    <script-execution></script-execution>
+    <python-generator></python-generator>
   </div>
 </template>
 
 <script>
-  import MenuView from './components/menu'
-  import BaseView from './components/base'
-  import scriptExecution from './components/scriptExecution'
+  import MenuView from './menu/menu'
+  import BaseView from './base/base'
+  import PythonGenerator from './build/python-generator'
 
   export default {
     name: 'report-generator',
     components: {
       MenuView,
       BaseView,
-      scriptExecution
+      PythonGenerator
     }
   }
 </script>

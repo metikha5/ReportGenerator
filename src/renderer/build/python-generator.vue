@@ -60,13 +60,13 @@
         // TODO: Important run does not work with current py file
         //
 
-        // TODO: Make this more user friendly (the user should not need to save everytime
+        // TODO: improve UX https://trello.com/c/gwT6L4f4
         if (FileHandler.selectedFile === null || Plots.state.plotsModified) {
           alert('You need to save your plots in a file before continuing')
           throw new Error('FileNotSaved')
         }
 
-        // TODO: detached ? https://nodejs.org/docs/v8.1.4/api/child_process.html#child_process_options_detached
+        // TODO: detached mode ? https://trello.com/c/1TLsNd5K
         this.childProccess = spawn(Settings.state.pythonPath, ['-u', Settings.state.generatorPath, FileHandler.selectedFile, Settings.state.databasePath])
         this.childProccess.stdout.setEncoding('utf8')
 
@@ -86,7 +86,7 @@
         })
 
         this.childProccess.stderr.on('data', (data) => {
-          // TODO create a generic "log message" function
+          // TODO log message function https://trello.com/c/X92QXXQ0
           let message
           if (typeof data === 'object') {
             message = new TextDecoder('utf-8').decode(data)

@@ -1,10 +1,10 @@
 export default class Curve {
   constructor(title=null, x='date', y=null, aggregate=false, style=null) {
-    this.title = title
+    this.title = title || ''
     this.x = x
-    this.y = y
+    this.y = y || ''
     this.aggregate = aggregate
-    this.style = style
+    this.style = style || ''
   }
 
   toJSON() {

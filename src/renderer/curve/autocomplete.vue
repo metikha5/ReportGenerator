@@ -24,6 +24,8 @@
 </template>
 
 <script>
+  import Suggestions from './suggestions'
+
   export default {
     name: 'Autocomplete',
     props: {
@@ -34,17 +36,21 @@
     },
     data() {
       return {
-        suggestions: ['tony', 'toto', 'tobi', 'john'],
         open: false,
         current: 0,
         matches: [],
-        cursorPosition: 0
+        context: null,
+        cursorPosition: 0  // TODO: update cursor position when the user click in the input
       }
     },
     computed: {
       openSuggestion() {
-        // TODO: Bug autocomplete: https://trello.com/c/A82H4s8L
-        return this.content !== '' && this.matches.length !== 0 && this.open === true
+        // Having several variables is necessay to have the computed value working correctly
+        // https://github.com/vuejs/vue/issues/370
+        let isEmpty = this.content === ''
+        let isOpen = this.open === true
+        let hasMatches = this.matches.length !== 0
+        return !isEmpty && isOpen && hasMatches
       }
     },
     created: function() {
@@ -52,9 +58,72 @@
     },
     methods: {
       updateMatches() {
-        this.matches = this.suggestions.filter((str) => {
-          return str.indexOf(this.content) >= 0
-        })
+        this.defineContext()
+        let suggestions = Suggestions.getSuggestion(this.context)
+        if (this.context === null) {
+          this.matches = []
+        } else {
+          this.matches = suggestions.filter((str) => {
+            return str.indexOf(this.context.word) >= 0
+          })
+        }
+      },
+
+      defineContext() {
+        // Return an object describing the context or null if autocomplete can't be provided
+        this.context = null
+        let context = {
+          start: 0,
+          end: this.content.length,
+          firstPart: '',
+          secondPart: null,
+          firstWord: false,
+          word: '',
+          editedPart: 'first'
+        }
+
+        if (this.content.trim().length === 0) {
+          this.firstWord = true
+          return
+        }
+
+        // Find beginning of the word
+        for (let i = this.cursorPosition; i > 0; i--) {
+          if (this.content[i] === ' ') {
+            context.start = i + 1
+            break
+          }
+        }
+
+        // Find end of the word
+        for (let i = this.cursorPosition; i < this.content.length; i++) {
+          if (this.content[i] === ' ') {
+            context.end = i - 1
+            break
+          }
+        }
+
+        let word = this.content.substr(context.start, context.end)
+        let dotPosition = word.indexOf('.')
+
+        context.firstWord = context.start === 0 && dotPosition === -1
+        context.word = word
+
+        if (dotPosition !== -1) {
+          if (word.split('.').length > 2) {
+            return
+          }
+          [context.firstPart, context.secondPart] = word.split('.')
+          if (this.cursorPosition < dotPosition) {
+            context.editedPart = 'first'
+            context.word = context.firstPart
+          } else {
+            context.editedPart = 'second'
+            context.word = context.secondPart
+          }
+        }
+
+        this.context = {...context}
       },
 
       onChange(event) {
@@ -70,9 +139,7 @@
       },
 
       enter() {
-        this.content = this.matches[this.current]
-        this.$emit('input', this.content)
-        this.open = false
+        this.complete(this.current)
       },
 
       escape() {
@@ -96,9 +163,7 @@
       },
 
       onClick(index) {
-        this.content = this.matches[index]
-        this.$emit('input', this.content)
-        this.open = false
+        this.complete(index)
       },
 
       left(event) {
@@ -111,6 +176,25 @@
         if (event.target.value.length !== event.target.selectionStart) {
           this.cursorPosition = event.target.selectionStart + 1
         }
+      },
+
+      complete(index) {
+        if (this.context === null || this.matches.length === 0) { return }
+        const toReplace = this.matches[index]
+
+        const beginning =
+          this.context.editedPart === 'first'
+          ? this.content.slice(0, this.context.start)
+          : this.content.slice(0, this.context.start + this.context.firstPart.length + 1)
+        const end = this.content.slice(beginning.length + this.context.word.length)
+        // console.log(this.context)
+        // console.log(toReplace)
+        // console.log(beginning)
+        // console.log(end)
+
+        this.content = beginning + toReplace + end
+        this.$emit('input', this.content)
+        this.open = false
       }
     }
   }

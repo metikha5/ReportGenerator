@@ -4,7 +4,7 @@
     <div class="list-group element-list">
       <a href="#" class="list-group-item borderless"
          v-for="curve in localPlot.curves"
-         v-bind:class="{'active': localPlot.selectedCurve == curve}"
+         :class="{'active': localPlot.selectedCurve == curve}"
          @click="selectCurve(curve)">
         {{ curve.title }}
       </a>

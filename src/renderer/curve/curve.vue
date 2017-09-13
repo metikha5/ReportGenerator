@@ -40,7 +40,7 @@
 
 
 <script>
-  import autocomplete from '../global/autocomplete'
+  import autocomplete from './autocomplete'
 
   export default {
     name: 'CurveView',

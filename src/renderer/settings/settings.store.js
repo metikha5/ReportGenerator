@@ -7,7 +7,7 @@
 export default {
   state: {
     pythonPath: '/usr/local/bin/python',
-    generatorPath: '/Users/metikha/Documents/projects/RTC4Water/gpc/biwer/gpc-tools/report_generator.py',
-    databasePath: '/Users/metikha/Documents/projects/RTC4Water/gpc/biwer/outputs/run1/GPC.db'
+    generatorPath: '/Users/metikha/Documents/projects/RTC4Water/gpc/watergpc_generic/toolkit/reports/report_generator.py',
+    databasePath: '/Users/metikha/Documents/projects/RTC4Water/gpc/biwer/outputs/scenario04-reference/GPC.db'
   }
 }

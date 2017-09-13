@@ -2,8 +2,11 @@
   <div>
     <!--<textarea class="form-control" v-model="content" rows="15" cols="50" @input="change"></textarea>-->
     <div style="position:relative" v-bind:class="{'open': openSuggestion}">
+      {{ cursorPosition }}
       <input class="form-control" type="text" v-model="content"
              @keydown.enter="enter"
+             @keydown.left="left"
+             @keydown.right="right"
              @keydown.down.prevent="down"
              @keydown.up.prevent="up"
              @keydown.esc="escape"
@@ -31,14 +34,16 @@
     },
     data() {
       return {
-        suggestions: [],
+        suggestions: ['tony', 'toto', 'tobi', 'john'],
         open: false,
         current: 0,
-        matches: []
+        matches: [],
+        cursorPosition: 0
       }
     },
     computed: {
       openSuggestion() {
+        // TODO: Bug autocomplete: https://trello.com/c/A82H4s8L
         return this.content !== '' && this.matches.length !== 0 && this.open === true
       }
     },
@@ -52,11 +57,13 @@
         })
       },
 
-      onChange() {
+      onChange(event) {
         if (this.open === false) {
           this.open = true
           this.current = 0
         }
+
+        this.cursorPosition = event.target.selectionStart
 
         this.updateMatches()
         this.$emit('input', this.content)
@@ -64,6 +71,7 @@
 
       enter() {
         this.content = this.matches[this.current]
+        this.$emit('input', this.content)
         this.open = false
       },
 
@@ -88,8 +96,21 @@
       },
 
       onClick(index) {
-        this.selection = this.matches[index]
+        this.content = this.matches[index]
+        this.$emit('input', this.content)
         this.open = false
+      },
+
+      left(event) {
+        if (event.target.selectionStart > 0) {
+          this.cursorPosition = event.target.selectionStart - 1
+        }
+      },
+
+      right(event) {
+        if (event.target.value.length !== event.target.selectionStart) {
+          this.cursorPosition = event.target.selectionStart + 1
+        }
       }
     }
   }

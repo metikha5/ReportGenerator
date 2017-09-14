@@ -47,10 +47,9 @@
       openSuggestion() {
         // Having several variables is necessay to have the computed value working correctly
         // https://github.com/vuejs/vue/issues/370
-        let isEmpty = this.content === ''
         let isOpen = this.open === true
         let hasMatches = this.matches.length !== 0
-        return !isEmpty && isOpen && hasMatches
+        return isOpen && hasMatches
       }
     },
     created: function() {
@@ -60,6 +59,7 @@
       updateMatches() {
         this.defineContext()
         let suggestions = Suggestions.getSuggestion(this.context)
+        console.log(suggestions)
         if (this.context === null) {
           this.matches = []
         } else {
@@ -83,7 +83,8 @@
         }
 
         if (this.content.trim().length === 0) {
-          this.firstWord = true
+          context.firstWord = true
+          this.context = context
           return
         }
 
@@ -123,7 +124,7 @@
           }
         }
 
-        this.context = {...context}
+        this.context = context
       },
 
       onChange(event) {
@@ -153,7 +154,13 @@
       },
 
       down() {
-        if (this.current < this.matches.length - 1) {
+        if (this.matches.length === 0) {
+          if (this.open === false) {
+            this.open = true
+            this.current = 0
+            this.updateMatches()
+          }
+        } else if (this.current < this.matches.length - 1) {
           this.current++
         }
       },

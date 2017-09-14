@@ -4,7 +4,11 @@ const definition = {
   secondPart: {
     tanks: ['is_controlled', 'setppoint', 'volume', 'virtual_volume', 'volume_in',
       'volume_out', 'autonomy', 'vmax', 'vres_min', 'zarea', 'dz_area'],
-    actuators: [],
+    actuators: ['counter_id', '_src', 'bz', 'is_controlled', 'is_active',
+      'is_provider_actuator', 'QMax', 'QMin', 'VdMax', 'Vdistrib_key',
+      'in_command', 'volume_in', 'last_volume_in', 'volume_out', 'vd_today_max',
+      'zd', 'kind', 'default_distribution', 'virtual_volume', 'virtual_state',
+      'Von', 'Voff', 'fixed_rc', 'penalty'],
     providers: ['total_consumption', 'reserved_capacity']
   }
 }

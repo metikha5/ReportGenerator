@@ -59,12 +59,11 @@
       updateMatches() {
         this.defineContext()
         let suggestions = Suggestions.getSuggestion(this.context)
-        console.log(suggestions)
         if (this.context === null) {
           this.matches = []
         } else {
           this.matches = suggestions.filter((str) => {
-            return str.indexOf(this.context.word) >= 0
+            return str.indexOf(this.context.word) >= 0 && this.context.word !== str
           })
         }
       },
@@ -115,7 +114,7 @@
             return
           }
           [context.firstPart, context.secondPart] = word.split('.')
-          if (this.cursorPosition < dotPosition) {
+          if (this.cursorPosition <= dotPosition) {
             context.editedPart = 'first'
             context.word = context.firstPart
           } else {
@@ -194,11 +193,6 @@
           ? this.content.slice(0, this.context.start)
           : this.content.slice(0, this.context.start + this.context.firstPart.length + 1)
         const end = this.content.slice(beginning.length + this.context.word.length)
-        // console.log(this.context)
-        // console.log(toReplace)
-        // console.log(beginning)
-        // console.log(end)
-
         this.content = beginning + toReplace + end
         this.$emit('input', this.content)
         this.open = false

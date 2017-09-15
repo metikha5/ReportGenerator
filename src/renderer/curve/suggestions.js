@@ -19,7 +19,7 @@ export default {
     if (context === null) {
       return []
     }
-    console.log('---->', context.firstWord)
+
     if (context.firstWord === true) {
       return [...definition.beginning, ...definition.firstPart]
     }
@@ -27,14 +27,12 @@ export default {
     // TODO continue: use firstPart and secondPart, if they are null, use word as firstPart
     // If we only have the second part, we can do nothing
     if (context.firstPart === null && context.secondPart !== null) {
-      return null
+      return []
     }
-    console.log('HEY OH')
-    console.log(context.editedPart === 'second' && context.firstPart !== '')
+
     if (context.editedPart === 'first') {
       return definition.firstPart
     } else if (context.editedPart === 'second' && context.firstPart !== '') {
-      console.log(definition.secondPart[context.firstPart])
       return definition.secondPart[context.firstPart]
     }
 

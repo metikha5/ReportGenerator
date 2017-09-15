@@ -2,7 +2,6 @@
   <div>
     <!--<textarea class="form-control" v-model="content" rows="15" cols="50" @input="change"></textarea>-->
     <div style="position:relative" v-bind:class="{'open': openSuggestion}">
-      {{ cursorPosition }}
       <input class="form-control" type="text" v-model="content"
              @keydown.enter="enter"
              @keydown.left="left"
@@ -10,6 +9,7 @@
              @keydown.down.prevent="down"
              @keydown.up.prevent="up"
              @keydown.esc="escape"
+             @click="jump"
              @input="onChange"/>
 
       <ul class="dropdown-menu" style="width:100%">
@@ -58,7 +58,6 @@
     methods: {
       updateMatches() {
         this.defineContext()
-        console.log('--->', this.context)
         let suggestions = Suggestions.getSuggestion(this.context)
         if (this.context === null) {
           this.matches = []
@@ -184,6 +183,10 @@
         if (event.target.value.length !== event.target.selectionStart) {
           this.cursorPosition = event.target.selectionStart + 1
         }
+      },
+
+      jump(event) {
+        this.cursorPosition = event.target.selectionStart
       },
 
       complete(index) {

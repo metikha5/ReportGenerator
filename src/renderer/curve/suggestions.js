@@ -1,5 +1,5 @@
 const definition = {
-  beginning: ['eval:'],
+  beginning: ['eval: '],
   firstPart: ['tanks', 'actuators', 'providers'],
   secondPart: {
     tanks: ['is_controlled', 'setppoint', 'volume', 'virtual_volume', 'volume_in',

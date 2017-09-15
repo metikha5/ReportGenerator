@@ -18,7 +18,6 @@
         <div class="col-sm-8">
           <!--<textarea id="yField" class="form-control" v-model="curve.y" rows="15" cols="50"></textarea>-->
           <autocomplete id="yField" v-model="curve.y"></autocomplete>
-          {{ curve.y }}
           <!--<autocomplete id="yField" v-model="curve.y"></autocomplete>-->
         </div>
       </div>

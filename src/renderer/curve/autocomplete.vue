@@ -58,6 +58,7 @@
     methods: {
       updateMatches() {
         this.defineContext()
+        console.log('--->', this.context)
         let suggestions = Suggestions.getSuggestion(this.context)
         if (this.context === null) {
           this.matches = []
@@ -114,7 +115,8 @@
             return
           }
           [context.firstPart, context.secondPart] = word.split('.')
-          if (this.cursorPosition <= dotPosition) {
+          const inWordPosition = this.cursorPosition - context.start
+          if (inWordPosition <= dotPosition) {
             context.editedPart = 'first'
             context.word = context.firstPart
           } else {
@@ -200,7 +202,11 @@
         // Close suggestion list
         this.open = false
         // Update input cursor position
-        this.cursorPosition = beginning.length + toReplace.length
+        if (this.context.editedPart === 'first' && this.context.secondPart !== null) {
+          this.cursorPosition = toReplace.length + this.context.secondPart.length + 1
+        } else {
+          this.cursorPosition = beginning.length + toReplace.length
+        }
       }
     }
   }

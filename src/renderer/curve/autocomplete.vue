@@ -193,9 +193,14 @@
           ? this.content.slice(0, this.context.start)
           : this.content.slice(0, this.context.start + this.context.firstPart.length + 1)
         const end = this.content.slice(beginning.length + this.context.word.length)
+        // Update content
         this.content = beginning + toReplace + end
+        // Notify content change
         this.$emit('input', this.content)
+        // Close suggestion list
         this.open = false
+        // Update input cursor position
+        this.cursorPosition = beginning.length + toReplace.length
       }
     }
   }

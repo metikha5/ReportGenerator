@@ -72,9 +72,11 @@
 
       newDefinition() {
         if (FileHandler.selectedFile !== null && Plots.state.plotsModified) {
-          if (!confirm('Current file has not been saved, you will loose your changes !\nDo you want to continue ?')) {
-            return
-          }
+          // if (!confirm('Current file has not been saved, you will loose your changes !\nDo you want to continue ?')) {
+          //   return
+          // }
+          // Is it better to auto-save the file or to notify the user ?
+          this.saveFile()
         }
 
         // Ask the user to create a new file

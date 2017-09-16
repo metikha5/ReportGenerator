@@ -27,7 +27,7 @@ class FileHandler {
 
   select() {
     return new Promise((resolve, reject) => {
-      dialog.showOpenDialog((fileNames) => {
+      dialog.showOpenDialog({filters: [{ name: 'Json', extensions: ['json'] }]}, (fileNames) => {
         if (fileNames !== undefined) {
           this.selectedFile = fileNames[0]
           resolve(fileNames[0])

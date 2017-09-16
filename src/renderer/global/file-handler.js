@@ -18,7 +18,7 @@ class FileHandler {
 
   create() {
     return new Promise((resolve, reject) => {
-      dialog.showSaveDialog((fileName) => {
+      dialog.showSaveDialog({filters: [{ name: 'Json', extensions: ['json'] }]}, (fileName) => {
         this.selectedFile = fileName
         resolve(fileName)
       })

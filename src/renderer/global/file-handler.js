@@ -19,8 +19,13 @@ class FileHandler {
   create() {
     return new Promise((resolve, reject) => {
       dialog.showSaveDialog({filters: [{ name: 'Json', extensions: ['json'] }]}, (fileName) => {
-        this.selectedFile = fileName
-        resolve(fileName)
+        if (fileName !== undefined) {
+          this.selectedFile = fileName
+          resolve(fileName)
+        } else {
+          // TODO: add except catch where used
+          reject(new Error('No file selected'))
+        }
       })
     })
   }
@@ -31,6 +36,9 @@ class FileHandler {
         if (fileNames !== undefined) {
           this.selectedFile = fileNames[0]
           resolve(fileNames[0])
+        } else {
+          // TODO: add except catch where used
+          reject(new Error('No file selected'))
         }
       })
     })

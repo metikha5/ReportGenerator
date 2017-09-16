@@ -14,12 +14,8 @@
           <li><a href="#" @click="loadFile"><span class="glyphicon glyphicon-folder-open icon"></span> Load</a></li>
           <li class="divider"></li>
           <li><a href="#" @click="saveFile"><span class="glyphicon glyphicon-floppy-disk icon-shift"></span> Save</a></li>
-          <!--<li><a href="#" @click="saveFile"><span class="glyphicon glyphicon-floppy-disk icon" style="margin-right: 5px; margin-top: 3px;"></span> Save</a></li>-->
           <li class="divider"></li>
-
           <li><a href="#" @click="executeGenerator"><span class="glyphicon glyphicon-play icon-shift"></span> Run</a></li>
-          <!--<li><a href="#" @click="doRun"><span class="glyphicon glyphicon-play icon-shift"></span> Run</a></li>-->
-          <!--<li><a href="#" @click="terminateSubProcess"><span class="glyphicon glyphicon-stop icon-shift"></span> Stop</a></li>-->
         </ul>
         <p class="navbar-text small selected-file" v-if="selectedFileDisplay !== ''">{{ selectedFileDisplay }}</p>
 
@@ -55,10 +51,8 @@
     methods: {
       // TODO: Test each method in details
       loadFile() {
-        if (Plots.state.plots.length !== 0 && Plots.state.plotsModified) {
-          if (!confirm('Current file has not been saved, you will loose your changes !\nDo you want to continue ?')) {
-            return
-          }
+        if (Plots.state.plots.length !== 0 && Plots.state.plotsModified && FileHandler.selectedFile !== null) {
+          this.saveFile()
         }
 
         FileHandler
@@ -68,7 +62,8 @@
             EventBus.$emit('basicReset')
 
             Plots.createFromList(data)
-            this.selectedFileDisplay = path.basename(FileHandler.selectedFile)
+            console.log(FileHandler.selectedFile)
+            this.updateDisplayedFile()
           })
           .then(() => {
             Plots.state.plotsModified = false
@@ -82,7 +77,13 @@
           }
         }
 
+        // Ask the user to create a new file
         FileHandler.selectedFile = null
+        FileHandler.create().then(() => {
+          this.updateDisplayedFile()
+        })
+
+        // Reset main view
         Plots.reset()
         EventBus.$emit('basicReset')
       },
@@ -96,6 +97,10 @@
             EventBus.$emit('plotsUpdated')
             Plots.state.plotsModified = false
           })
+      },
+
+      updateDisplayedFile() {
+        this.selectedFileDisplay = path.basename(FileHandler.selectedFile)
       },
 
       executeGenerator() {

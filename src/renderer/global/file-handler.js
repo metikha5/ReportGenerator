@@ -16,12 +16,20 @@ class FileHandler {
     this.selectedFile = null
   }
 
-  selectAFile() {
-    let self = this // TODO: avoid that
+  create() {
     return new Promise((resolve, reject) => {
-      dialog.showOpenDialog(function(fileNames) {
+      dialog.showSaveDialog((fileName) => {
+        this.selectedFile = fileName
+        resolve(fileName)
+      })
+    })
+  }
+
+  select() {
+    return new Promise((resolve, reject) => {
+      dialog.showOpenDialog((fileNames) => {
         if (fileNames !== undefined) {
-          self.selectedFile = fileNames[0]
+          this.selectedFile = fileNames[0]
           resolve(fileNames[0])
         }
       })
@@ -30,7 +38,7 @@ class FileHandler {
 
   async readFile() {
     // Let user select a file
-    await this.selectAFile()
+    await this.select()
     const selectedFile = this.selectedFile
 
     return new Promise((resolve, reject) => {
@@ -53,7 +61,7 @@ class FileHandler {
 
   async saveFile(content) {
     if (this.selectedFile === null) {
-      await this.selectAFile()
+      await this.select()
     }
 
     const selectedFilename = path.basename(this.selectedFile)

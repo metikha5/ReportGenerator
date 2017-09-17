@@ -64,6 +64,8 @@
             Plots.createFromList(data)
             console.log(FileHandler.selectedFile)
             this.updateDisplayedFile()
+          }, () => {
+            console.log('File loading cancelled')
           })
           .then(() => {
             Plots.state.plotsModified = false
@@ -83,6 +85,8 @@
         FileHandler.selectedFile = null
         FileHandler.create().then(() => {
           this.updateDisplayedFile()
+        }, () => {
+          console.log('File creation cancelled')
         })
 
         // Reset main view

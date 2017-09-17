@@ -46,7 +46,12 @@ class FileHandler {
 
   async readFile() {
     // Let user select a file
-    await this.select()
+    try {
+      await this.select()
+    } catch (e) {
+      Notifications.notify(e)
+      return Promise.reject(new Error(e))
+    }
     const selectedFile = this.selectedFile
 
     return new Promise((resolve, reject) => {
@@ -69,7 +74,12 @@ class FileHandler {
 
   async saveFile(content) {
     if (this.selectedFile === null) {
-      await this.select()
+      try {
+        await this.select()
+      } catch (e) {
+        Notifications.notify(e)
+        return
+      }
     }
 
     const selectedFilename = path.basename(this.selectedFile)

@@ -75,10 +75,10 @@ class FileHandler {
   async saveFile(content) {
     if (this.selectedFile === null) {
       try {
-        await this.select()
+        await this.create()
       } catch (e) {
         Notifications.notify(e)
-        return
+        return Promise.reject(new Error(e))
       }
     }
 
@@ -86,7 +86,6 @@ class FileHandler {
     fs.writeFile(this.selectedFile, JSON.stringify(content, null, 2), function(err) {
       if (err) {
         Notifications.notify(`Error saving file: ${selectedFilename}`)
-        // notify("Error saving file: " + err.message);  //todo display full message ?
       } else {
         Notifications.notify('File saved !')
       }

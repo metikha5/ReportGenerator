@@ -95,13 +95,13 @@
       },
 
       saveFile() {
-        // todo: Prevent save if nothing has been loaded ?
-        // TODO: TO TEST
         FileHandler
           .saveFile(Plots.state.plots.map((p) => p.toJSON()))
           .then(() => {
             EventBus.$emit('plotsUpdated')
             Plots.state.plotsModified = false
+          }, () => {
+            console.log('File not saved')
           })
       },
 
@@ -110,6 +110,14 @@
       },
 
       executeGenerator() {
+        if (FileHandler.selectedFile === null) {
+          alert('No definition file selected. Please load or create one.')
+          return
+        }
+
+        if (Plots.state.plotsModified === true) {
+          this.saveFile()
+        }
         EventBus.$emit('runGeneratorScript')
       }
     }

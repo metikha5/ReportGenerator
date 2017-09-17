@@ -28,7 +28,6 @@
   import EventBus from '../global/event-bus'
   import Settings from '../settings/settings.store'
   import FileHandler from '../global/file-handler'
-  import Plots from '../plot/plots.store'
 
   export default {
     name: 'pythonGenerator',
@@ -59,12 +58,6 @@
         //
         // TODO: Important run does not work with current py file
         //
-
-        // TODO: improve UX https://trello.com/c/gwT6L4f4
-        if (FileHandler.selectedFile === null || Plots.state.plotsModified) {
-          alert('You need to save your plots in a file before continuing')
-          throw new Error('FileNotSaved')
-        }
 
         // TODO: detached mode ? https://trello.com/c/1TLsNd5K
         this.childProccess = spawn(Settings.state.pythonPath, ['-u', Settings.state.generatorPath, FileHandler.selectedFile, Settings.state.databasePath])

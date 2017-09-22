@@ -24,7 +24,7 @@
 
 <script>
   import { spawn } from 'child_process'
-
+  
   import EventBus from '../global/event-bus'
   import Settings from '../settings/settings.store'
   import FileHandler from '../global/file-handler'

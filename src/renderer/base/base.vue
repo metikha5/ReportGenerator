@@ -26,36 +26,34 @@
 
 
 <script>
+  import Vuex from 'vuex'
+
   import EventBus from '../global/event-bus'
   import CurveView from '../curve/curve.vue'
   import PlotView from '../plot/plot'
-  import PlotStore from '../plot/plots.store'
 
   export default {
     name: 'BaseView',
     data() {
       return {
-        plots: PlotStore.state.plots,
-//        modified: PlotStore.state.plotsModified, TODO: Not used ?
         selectedPlot: null
       }
     },
-    watch: {
-      'plots': {
-        handler: function() {
-          PlotStore.state.plotsModified = true
-        },
-        deep: true
-      }
-    },
+    computed: Vuex.mapGetters(['plots']),
+    // TODO: still necessary ?
+    // watch: {
+    //   'plots': {
+    //     handler: function() {
+    //       PlotStore.state.plotsModified = true
+    //     },
+    //     deep: true
+    //   }
+    // },
     mounted() {
       EventBus.$on('basicReset', this.basicReset)
-      EventBus.$on('plotsUpdated', this.syncPlots)  // TODO: find a better way
     },
     methods: {
-      addPlot() {
-        PlotStore.addPlot()
-      },
+      ...Vuex.mapMutations(['addPlot']),
 
       selectPlot(plot) {
         this.selectedPlot = plot
@@ -63,10 +61,6 @@
 
       basicReset() {
         this.selectedPlot = null
-      },
-
-      syncPlots() {
-        this.plots = PlotStore.state.plots
       }
     },
     components: {

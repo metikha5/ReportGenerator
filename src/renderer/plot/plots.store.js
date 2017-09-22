@@ -3,7 +3,6 @@
  */
 
 import Plot from './plot-frame'
-import EventBus from '../global/event-bus'
 
 export default {
   state: {
@@ -11,27 +10,37 @@ export default {
     plotsModified: false
   },
 
-  addPlot() {
-    let p = new Plot()
-    p.title = `Plot ${this.state.plots.length + 1}`
-    this.state.plots.push(p)
+  getters: {
+    plots: state => state.plots,
+    plotsModified: state => state.plotsModified
   },
 
-  createFromList(rawPlots) {
-    if (this.state.plots.length !== 0) {
-      this.reset()
-    }
+  mutations: {
+    addPlot(state) {
+      let p = new Plot()
+      p.title = `Plot ${state.plots.length + 1}`
+      state.plots.push(p)
+    },
 
-    // Create set of Plot based on a list of objects
-    for (let v of rawPlots) {
-      // noinspection JSUnfilteredForInLoop
-      this.state.plots.push(new Plot(v.title, v.date_begin, v.date_end, v.curves))
-    }
-  },
+    createFromList(state, rawPlots) {
+      if (state.plots.length !== 0) {
+        this.reset()
+      }
 
-  reset() {
-    this.state.plots = []
-    this.state.plotsModified = false
-    EventBus.$emit('plotsUpdated')
+      // Create set of Plot based on a list of objects
+      for (let v of rawPlots) {
+        // noinspection JSUnfilteredForInLoop
+        state.plots.push(new Plot(v.title, v.date_begin, v.date_end, v.curves))
+      }
+    },
+
+    reset(state) {
+      state.plots = []
+      state.plotsModified = false
+    },
+
+    plotsModified(state) {
+      state.plotsModified = true
+    }
   }
 }

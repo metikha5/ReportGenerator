@@ -1,7 +1,8 @@
 import Curve from '../curve/curve-frame'
 
 export default class Plot {
-  constructor(title=null, dateBegin=null, dateEnd=null, curves=null) {
+  constructor(id, title=null, dateBegin=null, dateEnd=null, curves=null) {
+    this.id = id
     this.title = title
     this.dateBegin = dateBegin
     this.dateEnd = dateEnd

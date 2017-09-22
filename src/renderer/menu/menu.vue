@@ -68,6 +68,7 @@
             console.log('File loading cancelled')
           })
           .then(() => {
+            // TODO: TO UPDATE WITH VUEX
             Plots.state.plotsModified = false
           })
       },
@@ -99,6 +100,7 @@
           .saveFile(Plots.state.plots.map((p) => p.toJSON()))
           .then(() => {
             EventBus.$emit('plotsUpdated')
+            // TODO: TO UPDATE WITH VUEX
             Plots.state.plotsModified = false
           }, () => {
             console.log('File not saved')

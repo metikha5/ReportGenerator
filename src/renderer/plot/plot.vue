@@ -56,12 +56,11 @@
     },
     methods: {
       addCurve() {
-        this.localPlot.addCurve()
+        this.$store.commit('addCurve', {plot: this.localPlot})
       },
 
       selectCurve(curve) {
-        // To modify: copy the previous code here
-        this.localPlot.selectedCurve = curve
+        this.$store.commit('selectCurve', {plot: this.localPlot, curve})
       }
     }
   }

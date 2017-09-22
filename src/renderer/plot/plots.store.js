@@ -7,19 +7,32 @@ import Plot from './plot-frame'
 export default {
   state: {
     plots: [],
-    plotsModified: false
+    arePlotsModified: false
   },
 
   getters: {
     plots: state => state.plots,
-    plotsModified: state => state.plotsModified
+    arePlotsModified: state => state.arePlotsModified,
+    getByID: (state) => (id) => {
+      return state.plots.find(p => p.id === id)
+    }
   },
 
   mutations: {
     addPlot(state) {
-      let p = new Plot()
-      p.title = `Plot ${state.plots.length + 1}`
+      const plotId = state.plots.length + 1
+      let p = new Plot(plotId)
+      p.title = `Plot ${plotId}`
       state.plots.push(p)
+    },
+
+    addCurve(state, payload) {
+      payload.plot.addCurve()
+    },
+
+    selectCurve(state, payload) {
+      payload.plot.selectedCurve = payload.curve
+      // state.arePlotsModified = false
     },
 
     createFromList(state, rawPlots) {
@@ -29,18 +42,23 @@ export default {
 
       // Create set of Plot based on a list of objects
       for (let v of rawPlots) {
+        const plotId = state.plots.length + 1
         // noinspection JSUnfilteredForInLoop
-        state.plots.push(new Plot(v.title, v.date_begin, v.date_end, v.curves))
+        state.plots.push(new Plot(plotId, v.title, v.date_begin, v.date_end, v.curves))
       }
     },
 
     reset(state) {
       state.plots = []
-      state.plotsModified = false
+      state.arePlotsModified = false
     },
 
     plotsModified(state) {
-      state.plotsModified = true
+      state.arePlotsModified = true
+    },
+
+    resetPlotsModified(state) {
+      state.arePlotsModified = false
     }
   }
 }

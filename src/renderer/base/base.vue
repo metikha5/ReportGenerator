@@ -6,13 +6,13 @@
         <div class="list-group element-list">
           <a href="#" class="list-group-item borderless"
              v-for="plot in plots"
-             v-bind:class="{'active': selectedPlot === plot}"
+             :class="{'active': selectedPlot === plot}"
              @click.prevent="selectPlot(plot)">
             {{ plot.title }}
           </a>
         </div>
       </div>
-
+      {{arePlotsModified}}
       <div id="plotDetail" class="col-xs-3" v-if="selectedPlot !== null">
         <plot-view v-model="selectedPlot"></plot-view>
       </div>
@@ -39,21 +39,23 @@
         selectedPlot: null
       }
     },
-    computed: Vuex.mapGetters(['plots']),
+    computed: Vuex.mapGetters(['plots', 'arePlotsModified']),
     // TODO: still necessary ?
-    // watch: {
-    //   'plots': {
-    //     handler: function() {
-    //       PlotStore.state.plotsModified = true
-    //     },
-    //     deep: true
-    //   }
-    // },
+    watch: {
+      'plots': {
+        handler: function() {
+          this.$store.commit('plotsModified')
+          // console.log(this.$store)
+          // this.plotsModified()
+        },
+        deep: true
+      }
+    },
     mounted() {
       EventBus.$on('basicReset', this.basicReset)
     },
     methods: {
-      ...Vuex.mapMutations(['addPlot']),
+      ...Vuex.mapMutations(['addPlot', 'plotsModified']),
 
       selectPlot(plot) {
         this.selectedPlot = plot

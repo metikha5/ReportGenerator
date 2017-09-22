@@ -8,8 +8,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   modules: {
     plot: PlotStore
-  },
-  strict: true
+  }
+  // strict: true
 })
 
 console.log(store)

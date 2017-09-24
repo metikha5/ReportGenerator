@@ -35,13 +35,13 @@ export default {
       // state.arePlotsModified = false
     },
 
-    createFromList(state, rawPlots) {
+    createFromList(state, payload) {
       if (state.plots.length !== 0) {
         this.reset()
       }
 
       // Create set of Plot based on a list of objects
-      for (let v of rawPlots) {
+      for (let v of payload.rawPlots) {
         const plotId = state.plots.length + 1
         // noinspection JSUnfilteredForInLoop
         state.plots.push(new Plot(plotId, v.title, v.date_begin, v.date_end, v.curves))

@@ -61,6 +61,13 @@
 
       selectCurve(curve) {
         this.$store.commit('selectCurve', {plot: this.localPlot, curve})
+
+        // Strange behaviour, change the way to detect plots changes
+        if (this.$store.state.plot.arePlotsModified === false) {
+          setTimeout(() => {
+            this.$store.commit('resetPlotsModified')
+          }, 5)
+        }
       }
     }
   }

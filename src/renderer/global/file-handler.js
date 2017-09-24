@@ -7,7 +7,6 @@
 import { remote } from 'electron'
 import fs from 'fs'
 import path from 'path'
-import Notifications from '../global/notifications'
 
 const dialog = remote.dialog
 
@@ -49,7 +48,6 @@ class FileHandler {
     try {
       await this.select()
     } catch (e) {
-      Notifications.notify(e)
       return Promise.reject(new Error(e))
     }
     const selectedFile = this.selectedFile
@@ -57,17 +55,14 @@ class FileHandler {
     return new Promise((resolve, reject) => {
       fs.readFile(selectedFile, 'utf-8', function(err, data) {
         if (err) {
-          Notifications.notify(`Error reading file : ${path.basename(selectedFile)}`)
-          reject(new Error('Unable to read file')); return
+          reject(new Error(`Error reading file : ${path.basename(selectedFile)}`)); return
         }
 
         try {
           resolve(JSON.parse(data))
         } catch (e) {
-          Notifications.notify('Unable to parse data')
-          reject(new Error('Unable to parse file data')); return
+          reject(new Error('Unable to parse file data'))
         }
-        Notifications.notify('File loaded')
       })
     })
   }
@@ -77,7 +72,6 @@ class FileHandler {
       try {
         await this.create()
       } catch (e) {
-        Notifications.notify(e)
         return Promise.reject(new Error(e))
       }
     }
@@ -85,9 +79,9 @@ class FileHandler {
     const selectedFilename = path.basename(this.selectedFile)
     fs.writeFile(this.selectedFile, JSON.stringify(content, null, 2), function(err) {
       if (err) {
-        Notifications.notify(`Error saving file: ${selectedFilename}`)
+        return Promise.reject(new Error(`Error saving file: ${selectedFilename}`))
       } else {
-        Notifications.notify('File saved !')
+        return Promise.resolve('File saved !')
       }
     })
   }

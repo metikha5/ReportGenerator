@@ -34,47 +34,47 @@
 
 <script>
   import path from 'path'
+  import { mapGetters } from 'vuex'
 
   import EventBus from '../global/event-bus'
   import FileHandler from '../global/file-handler'
-  import Plots from '../plot/plots.store'
-  import Notifications from '../global/notifications'
 
   export default {
     name: 'MenuView',
     data() {
       return {
-        selectedFileDisplay: '',
-        notification: Notifications.state.currentNotification
+        selectedFileDisplay: ''
       }
     },
+    computed: mapGetters(['notification']),
     methods: {
       // TODO: Test each method in details
       loadFile() {
-        if (Plots.state.plots.length !== 0 && Plots.state.plotsModified && FileHandler.selectedFile !== null) {
+        console.log(this.$store)
+        if (this.$store.state.plot.plots.length !== 0 && this.$store.state.plot.arePlotsModified && FileHandler.selectedFile !== null) {
           this.saveFile()
         }
 
         FileHandler
           .readFile()
-          .then((data) => {
+          .then((rawPlots) => {
             // Reset app
             EventBus.$emit('basicReset')
 
-            Plots.createFromList(data)
-            console.log(FileHandler.selectedFile)
+            this.$store.commit('createFromList', {rawPlots})
+            this.$store.dispatch('notify', {notification: 'File loaded'})
             this.updateDisplayedFile()
-          }, () => {
-            console.log('File loading cancelled')
+          }, (e) => {
+            this.$store.dispatch('notify', {notification: e})
           })
           .then(() => {
             // TODO: TO UPDATE WITH VUEX
-            Plots.state.plotsModified = false
+            this.$store.commit('resetPlotsModified')
           })
       },
 
       newDefinition() {
-        if (FileHandler.selectedFile !== null && Plots.state.plotsModified) {
+        if (FileHandler.selectedFile !== null && this.$store.state.plot.arePlotsModified) {
           // if (!confirm('Current file has not been saved, you will loose your changes !\nDo you want to continue ?')) {
           //   return
           // }
@@ -86,24 +86,23 @@
         FileHandler.selectedFile = null
         FileHandler.create().then(() => {
           this.updateDisplayedFile()
-        }, () => {
-          console.log('File creation cancelled')
+        }, (err) => {
+          this.$store.dispatch('notify', {notification: err})
         })
 
         // Reset main view
-        Plots.reset()
+        this.$store.commit('resetPlotsModified')
         EventBus.$emit('basicReset')
       },
 
       saveFile() {
         FileHandler
-          .saveFile(Plots.state.plots.map((p) => p.toJSON()))
-          .then(() => {
-            EventBus.$emit('plotsUpdated')
-            // TODO: TO UPDATE WITH VUEX
-            Plots.state.plotsModified = false
-          }, () => {
-            console.log('File not saved')
+          .saveFile(this.$store.state.plot.plots.map((p) => p.toJSON()))
+          .then((res) => {
+            this.$store.commit('resetPlotsModified')
+            this.$store.dispatch('notify', {notification: res})
+          }, (err) => {
+            this.$store.dispatch('notify', {notification: err})
           })
       },
 
@@ -117,7 +116,7 @@
           return
         }
 
-        if (Plots.state.plotsModified === true) {
+        if (this.$store.state.plot.arePlotsModified === true) {
           this.saveFile()
         }
         EventBus.$emit('runGeneratorScript')

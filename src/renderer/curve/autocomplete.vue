@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ content }}
     <!--<textarea class="form-control" v-model="content" rows="15" cols="50" @input="change"></textarea>-->
     <div style="position:relative" v-bind:class="{'open': openSuggestion}">
       <input class="form-control" type="text" v-model="content"

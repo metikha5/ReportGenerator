@@ -50,9 +50,8 @@
     methods: {
       // TODO: Test each method in details
       loadFile() {
-        console.log(this.$store)
         if (this.$store.state.plot.plots.length !== 0 && this.$store.state.plot.arePlotsModified && FileHandler.selectedFile !== null) {
-          this.saveFile()
+          this.saveFile(false)
         }
 
         FileHandler
@@ -79,7 +78,7 @@
           //   return
           // }
           // Is it better to auto-save the file or to notify the user ?
-          this.saveFile()
+          this.saveFile(false)
         }
 
         // Ask the user to create a new file
@@ -95,14 +94,18 @@
         EventBus.$emit('basicReset')
       },
 
-      saveFile() {
+      saveFile(notify=true) {
         FileHandler
           .saveFile(this.$store.state.plot.plots.map((p) => p.toJSON()))
           .then((res) => {
             this.$store.commit('resetPlotsModified')
-            this.$store.dispatch('notify', {notification: res})
+            if (notify) {
+              this.$store.dispatch('notify', {notification: res})
+            }
           }, (err) => {
-            this.$store.dispatch('notify', {notification: err})
+            if (notify) {
+              this.$store.dispatch('notify', {notification: err})
+            }
           })
       },
 
@@ -117,7 +120,7 @@
         }
 
         if (this.$store.state.plot.arePlotsModified === true) {
-          this.saveFile()
+          this.saveFile(false)
         }
         EventBus.$emit('runGeneratorScript')
       }

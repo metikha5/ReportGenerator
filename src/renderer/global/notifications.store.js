@@ -9,7 +9,6 @@ export default {
 
   mutations: {
     updateNotification(state, payload) {
-      console.log('Notification: ', payload)
       if (Object.keys(payload.notification).length) {
         state.currentNotification = payload.notification
       }

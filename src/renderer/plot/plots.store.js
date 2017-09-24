@@ -37,7 +37,7 @@ export default {
 
     createFromList(state, payload) {
       if (state.plots.length !== 0) {
-        this.reset()
+        this.commit('reset')
       }
 
       // Create set of Plot based on a list of objects

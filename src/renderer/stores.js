@@ -13,8 +13,9 @@ const store = new Vuex.Store({
     notification: NotificationStore,
     settings: SettingsStore
   }
+  // Strict mode currently raise warning because selected curve
+  // is modified outside of the store
   // strict: true
 })
 
-console.log(store)
 export default store

@@ -40,13 +40,10 @@
       }
     },
     computed: Vuex.mapGetters(['plots', 'arePlotsModified']),
-    // TODO: still necessary ?
     watch: {
       'plots': {
         handler: function() {
           this.$store.commit('plotsModified')
-          // console.log(this.$store)
-          // this.plotsModified()
         },
         deep: true
       }

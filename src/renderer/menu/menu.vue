@@ -104,7 +104,6 @@
             }
           }, (err) => {
             if (notify) {
-              console.log(err)
               this.$store.dispatch('notify', {notification: err})
             }
           })

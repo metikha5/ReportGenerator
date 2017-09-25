@@ -9,7 +9,7 @@ export default {
 
   mutations: {
     updateNotification(state, payload) {
-      if (Object.keys(payload.notification).length) {
+      if (payload.notification !== null && Object.keys(payload.notification).length) {
         state.currentNotification = payload.notification
       }
     },

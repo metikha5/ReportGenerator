@@ -61,7 +61,7 @@
             EventBus.$emit('basicReset')
 
             this.$store.commit('createFromList', {rawPlots})
-            this.$store.dispatch('notify', {notification: 'File loaded'})
+            this.$store.dispatch('notify', {notification: 'File loaded !'})
             this.updateDisplayedFile()
           }, (e) => {
             this.$store.dispatch('notify', {notification: e})
@@ -97,13 +97,14 @@
       saveFile(notify=true) {
         FileHandler
           .saveFile(this.$store.state.plot.plots.map((p) => p.toJSON()))
-          .then((res) => {
+          .then(() => {
             this.$store.commit('resetPlotsModified')
             if (notify) {
-              this.$store.dispatch('notify', {notification: res})
+              this.$store.dispatch('notify', {notification: 'File saved !'})
             }
           }, (err) => {
             if (notify) {
+              console.log(err)
               this.$store.dispatch('notify', {notification: err})
             }
           })

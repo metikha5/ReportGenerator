@@ -24,9 +24,9 @@
 
 <script>
   import { spawn } from 'child_process'
-  
+  import { mapGetters } from 'vuex'
+
   import EventBus from '../global/event-bus'
-  import Settings from '../settings/settings.store'
   import FileHandler from '../global/file-handler'
 
   export default {
@@ -38,6 +38,7 @@
         output: []
       }
     },
+    computed: mapGetters(['pythonPath', 'generatorPath', 'databasePath']),
     mounted() {
       EventBus.$on('runGeneratorScript', this.openModal)
     },
@@ -60,7 +61,7 @@
         //
 
         // TODO: detached mode ? https://trello.com/c/1TLsNd5K
-        this.childProccess = spawn(Settings.state.pythonPath, ['-u', Settings.state.generatorPath, FileHandler.selectedFile, Settings.state.databasePath])
+        this.childProccess = spawn(this.pythonPath, ['-u', this.generatorPath, FileHandler.selectedFile, this.databasePath])
         this.childProccess.stdout.setEncoding('utf8')
 
         const scrollDown = () => {
@@ -70,7 +71,7 @@
 
         this.output.push({
           type: 'info',
-          message: `Execute: ${Settings.state.pythonPath} ${Settings.state.generatorPath} ${FileHandler.selectedFile} ${Settings.state.databasePath}`
+          message: `Execute: ${this.pythonPath} ${this.generatorPath} ${FileHandler.selectedFile} ${this.databasePath}`
         })
 
         this.childProccess.stdout.on('data', (data) => {

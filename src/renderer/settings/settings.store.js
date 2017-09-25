@@ -8,6 +8,11 @@ export default {
   state: {
     pythonPath: '/usr/local/bin/python',
     generatorPath: '/Users/metikha/Documents/projects/RTC4Water/gpc/watergpc_generic/toolkit/reports/report_generator.py',
-    databasePath: '/Users/metikha/Documents/projects/RTC4Water/gpc/biwer/outputs/scenario04-reference/GPC.db'
+    databasePath: '/Users/metikha/Documents/projects/RTC4Water/gpc/bous/outputs/run29/GPC.db'
+  },
+  getters: {
+    pythonPath: state => state.pythonPath,
+    generatorPath: state => state.generatorPath,
+    databasePath: state => state.databasePath
   }
 }

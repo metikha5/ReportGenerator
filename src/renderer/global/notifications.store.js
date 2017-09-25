@@ -16,13 +16,11 @@ export default {
 
     resetNotification(state) {
       state.currentNotification = null
-      console.log('Reset notif')
     }
   },
 
   actions: {
     notify({commit}, payload) {
-      console.log('notif action')
       commit('updateNotification', payload)
       setTimeout(() => { commit('resetNotification') }, 3000)
     }

@@ -85,13 +85,13 @@
         FileHandler.selectedFile = null
         FileHandler.create().then(() => {
           this.updateDisplayedFile()
+
+          // Reset main view
+          this.$store.commit('reset')
+          EventBus.$emit('basicReset')
         }, (err) => {
           this.$store.dispatch('notify', {notification: err})
         })
-
-        // Reset main view
-        this.$store.commit('resetPlotsModified')
-        EventBus.$emit('basicReset')
       },
 
       saveFile(notify=true) {

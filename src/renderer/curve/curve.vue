@@ -16,9 +16,7 @@
       <div class="form-group">
         <label for="yField" class="col-sm-2 control-label">Y axis</label>
         <div class="col-sm-8">
-          <!--<textarea id="yField" class="form-control" v-model="curve.y" rows="15" cols="50"></textarea>-->
-          <autocomplete id="yField" v-model="curve.y"></autocomplete>
-          <!--<autocomplete id="yField" v-model="curve.y"></autocomplete>-->
+          <autocomplete id="yField" :val.sync="curve.y"></autocomplete>
         </div>
       </div>
       <div class="form-group">

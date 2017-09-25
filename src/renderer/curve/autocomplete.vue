@@ -25,11 +25,10 @@
 
 <script>
   import Suggestions from './suggestions'
-
   export default {
     name: 'Autocomplete',
     props: {
-      value: {
+      val: {
         type: String,
         required: true
       }
@@ -50,10 +49,13 @@
         let isOpen = this.open === true
         let hasMatches = this.matches.length !== 0
         return isOpen && hasMatches
+      },
+      content: {
+        get() { return this.val },
+        set(newValue) {
+          this.$emit('update:val', newValue)
+        }
       }
-    },
-    created: function() {
-      this.content = this.value
     },
     methods: {
       updateMatches() {

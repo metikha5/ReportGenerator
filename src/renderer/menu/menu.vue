@@ -34,74 +34,78 @@
 
 <script>
   import path from 'path'
+  import { mapGetters } from 'vuex'
 
   import EventBus from '../global/event-bus'
   import FileHandler from '../global/file-handler'
-  import Plots from '../plot/plots.store'
-  import Notifications from '../global/notifications'
 
   export default {
     name: 'MenuView',
     data() {
       return {
-        selectedFileDisplay: '',
-        notification: Notifications.state.currentNotification
+        selectedFileDisplay: ''
       }
     },
+    computed: mapGetters(['notification']),
     methods: {
       // TODO: Test each method in details
       loadFile() {
-        if (Plots.state.plots.length !== 0 && Plots.state.plotsModified && FileHandler.selectedFile !== null) {
-          this.saveFile()
+        if (this.$store.state.plot.plots.length !== 0 && this.$store.state.plot.arePlotsModified && FileHandler.selectedFile !== null) {
+          this.saveFile(false)
         }
 
         FileHandler
           .readFile()
-          .then((data) => {
+          .then((rawPlots) => {
             // Reset app
             EventBus.$emit('basicReset')
 
-            Plots.createFromList(data)
-            console.log(FileHandler.selectedFile)
+            this.$store.commit('createFromList', {rawPlots})
+            this.$store.dispatch('notify', {notification: 'File loaded !'})
             this.updateDisplayedFile()
-          }, () => {
-            console.log('File loading cancelled')
+          }, (e) => {
+            this.$store.dispatch('notify', {notification: e})
           })
           .then(() => {
-            Plots.state.plotsModified = false
+            // TODO: TO UPDATE WITH VUEX
+            this.$store.commit('resetPlotsModified')
           })
       },
 
       newDefinition() {
-        if (FileHandler.selectedFile !== null && Plots.state.plotsModified) {
+        if (FileHandler.selectedFile !== null && this.$store.state.plot.arePlotsModified) {
           // if (!confirm('Current file has not been saved, you will loose your changes !\nDo you want to continue ?')) {
           //   return
           // }
           // Is it better to auto-save the file or to notify the user ?
-          this.saveFile()
+          this.saveFile(false)
         }
 
         // Ask the user to create a new file
         FileHandler.selectedFile = null
         FileHandler.create().then(() => {
           this.updateDisplayedFile()
-        }, () => {
-          console.log('File creation cancelled')
-        })
 
-        // Reset main view
-        Plots.reset()
-        EventBus.$emit('basicReset')
+          // Reset main view
+          this.$store.commit('reset')
+          EventBus.$emit('basicReset')
+        }, (err) => {
+          this.$store.dispatch('notify', {notification: err})
+        })
       },
 
-      saveFile() {
+      saveFile(notify=true) {
         FileHandler
-          .saveFile(Plots.state.plots.map((p) => p.toJSON()))
+          .saveFile(this.$store.state.plot.plots.map((p) => p.toJSON()))
           .then(() => {
-            EventBus.$emit('plotsUpdated')
-            Plots.state.plotsModified = false
-          }, () => {
-            console.log('File not saved')
+            this.$store.commit('resetPlotsModified')
+            if (notify) {
+              this.$store.dispatch('notify', {notification: 'File saved !'})
+            }
+          }, (err) => {
+            if (notify) {
+              this.$store.dispatch('notify', {notification: err})
+            }
           })
       },
 
@@ -115,8 +119,8 @@
           return
         }
 
-        if (Plots.state.plotsModified === true) {
-          this.saveFile()
+        if (this.$store.state.plot.arePlotsModified === true) {
+          this.saveFile(false)
         }
         EventBus.$emit('runGeneratorScript')
       }

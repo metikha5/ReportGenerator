@@ -6,13 +6,13 @@
         <div class="list-group element-list">
           <a href="#" class="list-group-item borderless"
              v-for="plot in plots"
-             v-bind:class="{'active': selectedPlot === plot}"
+             :class="{'active': selectedPlot === plot}"
              @click.prevent="selectPlot(plot)">
             {{ plot.title }}
           </a>
         </div>
       </div>
-
+      {{arePlotsModified}}
       <div id="plotDetail" class="col-xs-3" v-if="selectedPlot !== null">
         <plot-view v-model="selectedPlot"></plot-view>
       </div>
@@ -26,36 +26,33 @@
 
 
 <script>
+  import Vuex from 'vuex'
+
   import EventBus from '../global/event-bus'
   import CurveView from '../curve/curve.vue'
   import PlotView from '../plot/plot'
-  import PlotStore from '../plot/plots.store'
 
   export default {
     name: 'BaseView',
     data() {
       return {
-        plots: PlotStore.state.plots,
-//        modified: PlotStore.state.plotsModified, TODO: Not used ?
         selectedPlot: null
       }
     },
+    computed: Vuex.mapGetters(['plots', 'arePlotsModified']),
     watch: {
       'plots': {
         handler: function() {
-          PlotStore.state.plotsModified = true
+          this.$store.commit('plotsModified')
         },
         deep: true
       }
     },
     mounted() {
       EventBus.$on('basicReset', this.basicReset)
-      EventBus.$on('plotsUpdated', this.syncPlots)  // TODO: find a better way
     },
     methods: {
-      addPlot() {
-        PlotStore.addPlot()
-      },
+      ...Vuex.mapMutations(['addPlot', 'plotsModified']),
 
       selectPlot(plot) {
         this.selectedPlot = plot
@@ -63,10 +60,6 @@
 
       basicReset() {
         this.selectedPlot = null
-      },
-
-      syncPlots() {
-        this.plots = PlotStore.state.plots
       }
     },
     components: {

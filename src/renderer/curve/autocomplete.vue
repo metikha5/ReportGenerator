@@ -137,8 +137,16 @@
 
         this.cursorPosition = event.target.selectionStart
 
-        this.updateMatches()
         this.$emit('input', this.content)
+
+        // Add a small delay to updateMatches to be sure that content has correctly
+        // been updated before starting its analysis. The other possibility is to
+        // listen for the "input" event and call updateMatches with the received
+        // content ... Need to think about that ...
+        // this.$on('input', (c) => { this.updateMatches(c) })
+        setTimeout(() => {
+          this.updateMatches()
+        }, 10)
       },
 
       enter() {

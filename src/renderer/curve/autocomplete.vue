@@ -150,7 +150,9 @@
       },
 
       enter() {
-        this.complete(this.current)
+        if (this.open) {
+          this.complete(this.current)
+        }
       },
 
       escape() {

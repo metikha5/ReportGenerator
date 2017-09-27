@@ -1,5 +1,7 @@
 <template>
   <div>
+    <button class="btn btn-danger btn-xs block-center" @click="removeCurve">Remove curve</button>
+
     <form class="form-horizontal" style="margin-top: 42px">
       <div class="form-group">
         <label for="curveTitle" class="col-sm-2 control-label">Title</label>
@@ -42,10 +44,16 @@
   export default {
     name: 'CurveView',
     props: {
-      value: Object
+      value: Object,
+      plot: Object
     },
     computed: {
       curve() { return this.value }
+    },
+    methods: {
+      removeCurve() {
+        this.$store.commit('removeCurve', {curve: this.curve, plot: this.plot})
+      }
     },
     components: {autocomplete}
   }

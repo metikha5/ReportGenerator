@@ -8,7 +8,7 @@
              v-for="plot in plots"
              :class="{'active': selectedPlot === plot}"
              @click.prevent="selectPlot(plot)">
-            {{ plot.title }} - {{ plot.id }}
+            {{ plot.title }}
           </a>
         </div>
       </div>
@@ -17,8 +17,8 @@
         <plot-view v-model="selectedPlot"></plot-view>
       </div>
 
-      <div id="curveDetail" class="col-xs-6" v-if="selectedPlot !== null && selectedPlot.selectedCurve !== null">
-        <curve-view v-model="selectedPlot.selectedCurve"></curve-view>
+      <div id="curveDetail" class="col-xs-6" v-if="displayCurveBlock">
+        <curve-view v-model="selectedPlot.selectedCurve" :plot="selectedPlot"></curve-view>
       </div>
     </div>
   </div>
@@ -44,6 +44,10 @@
 
       displayPlotBlock() {
         return this.selectedPlot !== null && this.plots.findIndex(o => o.id === this.selectedPlot.id) !== -1
+      },
+
+      displayCurveBlock() {
+        return this.selectedPlot !== null && this.selectedPlot.selectedCurve !== null && this.selectedPlot.curves.findIndex(o => o.id === this.selectedPlot.selectedCurve.id) !== -1
       }
     },
     watch: {

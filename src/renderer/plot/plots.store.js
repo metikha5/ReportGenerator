@@ -38,7 +38,7 @@ export default {
     },
 
     removeCurve(state, payload) {
-      const curveIndex = payload.plot.curves.findIndex(payload.curve)
+      const curveIndex = payload.plot.curves.findIndex(c => payload.curve.id === c.id)
       if (curveIndex !== -1) {
         payload.plot.curves.splice(curveIndex, 1)
       }

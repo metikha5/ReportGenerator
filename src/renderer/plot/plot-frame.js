@@ -10,10 +10,8 @@ export default class Plot {
     this.curves = []
     if (curves) {
       for (let c of curves) {
-        if (c.title === undefined) {
-          c.title = `Curve ${this.curves.length + 1}`
-        }
-        this.curves.push(new Curve(c.title, c.x, c.y, c.aggregate, c.style))
+        const curveId = Curve.defineId(this.curves)
+        this.curves.push(new Curve(curveId, c.title, c.x, c.y, c.aggregate, c.style))
       }
     }
 
@@ -21,7 +19,7 @@ export default class Plot {
   }
 
   addCurve() {
-    this.curves.push(new Curve(`Curve ${this.curves.length + 1}`))
+    this.curves.push(new Curve(Curve.defineId(this.curves)))
   }
 
   toJSON() {

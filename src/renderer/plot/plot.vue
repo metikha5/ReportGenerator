@@ -1,6 +1,9 @@
 <template>
   <div>
-    <button class="btn btn-default btn-xs center-block" @click="addCurve">Add curve</button>
+    <div class="center-block row" style="width: 170px">
+      <button class="btn btn-default btn-xs" @click="addCurve">Add curve</button>
+      <button class="btn btn-danger btn-xs" @click="removePlot" style="margin-left: 5px">Remove plot</button>
+    </div>
     <div class="list-group element-list">
       <a href="#" class="list-group-item borderless"
          v-for="curve in localPlot.curves"
@@ -68,6 +71,10 @@
             this.$store.commit('resetPlotsModified')
           }, 5)
         }
+      },
+
+      removePlot() {
+        this.$store.commit('removePlot', {plot: this.localPlot})
       }
     }
   }

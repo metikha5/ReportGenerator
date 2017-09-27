@@ -32,4 +32,14 @@ export default class Plot {
       curves: this.curves.map((c) => c.toJSON())
     }
   }
+
+  static defineId(allPlots) {
+    let id = allPlots.length
+    while (true) {
+      if (allPlots.findIndex(p => p.id === id) === -1) {
+        return id
+      }
+      id++
+    }
+  }
 }

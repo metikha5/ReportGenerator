@@ -20,9 +20,9 @@ export default {
 
   mutations: {
     addPlot(state) {
-      const plotId = state.plots.length + 1
+      const plotId = Plot.defineId(state.plots)
       let p = new Plot(plotId)
-      p.title = `Plot ${plotId}`
+      p.title = 'Unnamed plot'
       state.plots.push(p)
     },
 
@@ -56,7 +56,7 @@ export default {
 
       // Create set of Plot based on a list of objects
       for (let v of payload.rawPlots) {
-        const plotId = state.plots.length + 1
+        const plotId = Plot.defineId(state.plots)
         // noinspection JSUnfilteredForInLoop
         state.plots.push(new Plot(plotId, v.title, v.date_begin, v.date_end, v.curves))
       }

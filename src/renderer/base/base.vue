@@ -8,12 +8,12 @@
              v-for="plot in plots"
              :class="{'active': selectedPlot === plot}"
              @click.prevent="selectPlot(plot)">
-            {{ plot.title }}
+            {{ plot.title }} - {{ plot.id }}
           </a>
         </div>
       </div>
-      {{arePlotsModified}}
-      <div id="plotDetail" class="col-xs-3" v-if="selectedPlot !== null">
+
+      <div id="plotDetail" class="col-xs-3" v-if="displayPlotBlock">
         <plot-view v-model="selectedPlot"></plot-view>
       </div>
 
@@ -39,7 +39,13 @@
         selectedPlot: null
       }
     },
-    computed: Vuex.mapGetters(['plots', 'arePlotsModified']),
+    computed: {
+      ...Vuex.mapGetters(['plots', 'arePlotsModified']),
+
+      displayPlotBlock() {
+        return this.selectedPlot !== null && this.plots.findIndex(o => o.id === this.selectedPlot.id) !== -1
+      }
+    },
     watch: {
       'plots': {
         handler: function() {

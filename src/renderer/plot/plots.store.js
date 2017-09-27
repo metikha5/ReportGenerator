@@ -30,6 +30,20 @@ export default {
       payload.plot.addCurve()
     },
 
+    removePlot(state, payload) {
+      const plotIndex = state.plots.findIndex((o) => payload.plot.id === o.id)
+      if (plotIndex !== -1) {
+        state.plots.splice(plotIndex, 1)
+      }
+    },
+
+    removeCurve(state, payload) {
+      const curveIndex = payload.plot.curves.findIndex(payload.curve)
+      if (curveIndex !== -1) {
+        payload.plot.curves.splice(curveIndex, 1)
+      }
+    },
+
     selectCurve(state, payload) {
       payload.plot.selectedCurve = payload.curve
       // state.arePlotsModified = false

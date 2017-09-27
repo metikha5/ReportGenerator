@@ -47,7 +47,10 @@
       },
 
       displayCurveBlock() {
-        return this.selectedPlot !== null && this.selectedPlot.selectedCurve !== null && this.selectedPlot.curves.findIndex(o => o.id === this.selectedPlot.selectedCurve.id) !== -1
+        let plotSelected = this.selectedPlot !== null
+        let curveSelected = plotSelected && this.selectedPlot.selectedCurve !== null
+        let curveInList = curveSelected && this.selectedPlot.curves.findIndex(o => o.id === this.selectedPlot.selectedCurve.id) !== -1
+        return curveInList
       }
     },
     watch: {

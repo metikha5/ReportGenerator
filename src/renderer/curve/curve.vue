@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="btn btn-danger btn-xs block-center" @click="removeCurve">Remove curve</button>
+    <button class="btn btn-danger btn-xs center-block" @click="removeCurve" style="width: 100px">Remove curve</button>
 
     <form class="form-horizontal" style="margin-top: 42px">
       <div class="form-group">
@@ -60,9 +60,9 @@
 </script>
 
 <style>
-  #yField {
+/*   #yField {
     resize: none;
     height: 150px;
     max-height: 200px;
-  }
+  } */
 </style>

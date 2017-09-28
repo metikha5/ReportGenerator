@@ -6,6 +6,7 @@ import ElectronStorage from 'electron-store'
 
 export default {
   state: {
+    // TODO: remove default when settings can be edited
     storage: new ElectronStorage({
       name: 'report_generator_config',
       defaults: {
@@ -23,6 +24,12 @@ export default {
   mutations: {
     updatePythonPath: (state, payload) => {
       state.storage.set('pythonPath', payload.pythonPath)
+    },
+    updateGeneratorPath: (state, payload) => {
+      state.storage.set('generatorPath', payload.generatorPath)
+    },
+    updateDatabasePath: (state, payload) => {
+      state.storage.set('databasePath', payload.databasePath)
     }
   }
 }

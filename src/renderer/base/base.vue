@@ -1,4 +1,5 @@
 <template>
+<div>
   <div id="content">
     <div class="row">
       <div id="base" class="col-xs-3">
@@ -22,6 +23,8 @@
       </div>
     </div>
   </div>
+  <python-generator></python-generator>
+</div>
 </template>
 
 
@@ -31,6 +34,7 @@
   import EventBus from '../global/event-bus'
   import CurveView from '../curve/curve.vue'
   import PlotView from '../plot/plot'
+  import PythonGenerator from '../build/python-generator'
 
   export default {
     name: 'BaseView',
@@ -77,7 +81,8 @@
     },
     components: {
       PlotView,
-      CurveView
+      CurveView,
+      PythonGenerator
     }
   }
 </script>

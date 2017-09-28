@@ -1,19 +1,20 @@
 <template>
   <div id="app">
     <menu-view></menu-view>
-    <base-view></base-view>
+    <router-view></router-view>
+    <!-- <base-view></base-view> -->
   </div>
 </template>
 
 <script>
   import MenuView from './menu/menu'
-  import BaseView from './base/base'
+  // import BaseView from './base/base'
 
   export default {
     name: 'report-generator',
     components: {
-      MenuView,
-      BaseView
+      MenuView
+      // BaseView
     }
   }
 </script>

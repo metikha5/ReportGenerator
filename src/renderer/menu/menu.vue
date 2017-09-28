@@ -16,6 +16,8 @@
           <li><a href="#" @click="saveFile"><span class="glyphicon glyphicon-floppy-disk icon-shift"></span> Save</a></li>
           <li class="divider"></li>
           <li><a href="#" @click="executeGenerator"><span class="glyphicon glyphicon-play icon-shift"></span> Run</a></li>
+          <li class="divider"></li>
+          <li><router-link :to="{name: 'settings'}"  class="pull-right"><span class="glyphicon glyphicon glyphicon-cog icon-shift"></span> Settings</router-link></li>
         </ul>
         <p class="navbar-text small selected-file" v-if="selectedFileDisplay !== ''">{{ selectedFileDisplay }}</p>
 

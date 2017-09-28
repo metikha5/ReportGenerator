@@ -17,6 +17,7 @@
         <input id="databasePath" type="text" class="form-control" v-model="databasePath">
       </div>
     </form>
+    <router-link :to="{name: 'base'}" tag="button" class="btn btn-sm btn-default">Close</router-link>
   </div>
 </template>
 
@@ -25,15 +26,15 @@
     name: 'SettingsView',
     computed: {
       pythonPath: {
-        get() { return this.store.getters.pythonPath() },
+        get() { return this.$store.getters.pythonPath },
         set(newValue) { this.$store.commit('updatePythonPath', {pythonPath: newValue}) }
       },
       generatorPath: {
-        get() { return this.store.getters.generatorPath() },
+        get() { return this.$store.getters.generatorPath },
         set(newValue) { this.$store.commit('updateGeneratorPath', {pythonPath: newValue}) }
       },
       databasePath: {
-        get() { return this.store.getters.databasePath() },
+        get() { return this.$store.getters.databasePath },
         set(newValue) { this.$store.commit('updateDatabasePath', {pythonPath: newValue}) }
       }
     }

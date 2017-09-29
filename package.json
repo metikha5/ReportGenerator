@@ -1,9 +1,9 @@
 {
   "name": "report-generator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Michael Bremec <michael@bremec.fr>",
   "description": "GPC report generator",
-  "license": null,
+  "license": "WTFPL",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",

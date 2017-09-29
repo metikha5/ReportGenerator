@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 // TODO: Bootstrap modal not working, use  https://fr.vuejs.org/v2/examples/modal.html ?
 import BootstrapVue from 'bootstrap-vue'
+require('vue2-animate/dist/vue2-animate.min.css')
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.use(BootstrapVue)

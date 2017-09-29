@@ -22,7 +22,7 @@
         <p class="navbar-text small selected-file" v-if="selectedFileDisplay !== ''">{{ selectedFileDisplay }}</p>
 
         <div class="nav navbar-nav navbar-right">
-          <transition name="fade">
+          <transition name="fadeUp">
             <p class="navbar-text" v-if="notification !== null">
               {{ notification }}
             </p>
@@ -146,13 +146,5 @@
 
   .selected-file {
     margin-top: 18px;
-  }
-
-  /* Transition for the notifications */
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-  }
-  .fade-enter, .fade-leave-to {
-    opacity: 0;
   }
 </style>

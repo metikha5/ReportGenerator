@@ -3,33 +3,40 @@
  */
 
 import ElectronStorage from 'electron-store'
+const storage = new ElectronStorage()
 
 export default {
   state: {
-    // TODO: remove default when settings can be edited
-    storage: new ElectronStorage({
-      name: 'report_generator_config',
-      defaults: {
-        pythonPath: '/usr/local/bin/python',
-        generatorPath: '/Users/metikha/Documents/projects/RTC4Water/gpc/watergpc_generic/toolkit/reports/report_generator.py',
-        databasePath: '/Users/metikha/Documents/projects/RTC4Water/gpc/bous/outputs/run29/GPC.db'
-      }
-    })
+    pythonPath: null,
+    generatorPath: null,
+    databasePath: null
   },
   getters: {
-    pythonPath: state => state.storage.get('pythonPath'),
-    generatorPath: state => state.storage.get('generatorPath'),
-    databasePath: state => state.storage.get('databasePath')
+    pythonPath(state) {
+      state.pythonPath = storage.get('pythonPath')
+      return state.pythonPath
+    },
+    generatorPath(state) {
+      state.generatorPath = storage.get('generatorPath')
+      return state.generatorPath
+    },
+    databasePath(state) {
+      state.databasePath = storage.get('databasePath')
+      return state.databasePath
+    }
   },
   mutations: {
     updatePythonPath: (state, payload) => {
-      state.storage.set('pythonPath', payload.pythonPath)
+      storage.set('pythonPath', payload.pythonPath)
+      state.pythonPath = payload.pythonPath
     },
     updateGeneratorPath: (state, payload) => {
-      state.storage.set('generatorPath', payload.generatorPath)
+      storage.set('generatorPath', payload.generatorPath)
+      state.generatorPath = payload.generatorPath
     },
     updateDatabasePath: (state, payload) => {
-      state.storage.set('databasePath', payload.databasePath)
+      storage.set('databasePath', payload.databasePath)
+      state.databasePath = payload.databasePath
     }
   }
 }

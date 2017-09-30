@@ -31,7 +31,7 @@ export default class Plot {
       dateBegin: this.dateBegin,
       dateEnd: this.dateEnd,
       curves: this.curves.map((c) => c.toJSON()),
-      group: this.group,
+      group: this.group !== '' ? this.group : null,
       displayLegend: this.displayLegend,
       legendPosition: this.legendPosition
     }

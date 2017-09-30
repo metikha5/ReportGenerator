@@ -16,9 +16,9 @@ export default class Curve {
       x: this.x,
       y: this.y,
       aggregate: this.aggregate,
-      style: this.style,
-      resample: this.resample,
-      resampleHow: this.resampleHow
+      style: this.style !== '' ? this.style : null,
+      resample: this.resample !== '' ? this.resample : null,
+      resampleHow: this.resampleHow !== '' ? this.resampleHow : null
     }
   }
 

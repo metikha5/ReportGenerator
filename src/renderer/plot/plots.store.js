@@ -60,7 +60,7 @@ export default {
       for (let v of payload.rawPlots) {
         const plotId = Plot.defineId(state.plots)
         // noinspection JSUnfilteredForInLoop
-        state.plots.push(new Plot(plotId, v.title, v.date_begin, v.date_end, v.curves))
+        state.plots.push(new Plot(plotId, v.title, v.date_begin, v.date_end, v.curves, v.group, v.displayLegend, v.legendPosition))
       }
     },
 

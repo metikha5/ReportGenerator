@@ -23,7 +23,7 @@
       </div>
       <div class="form-group">
         <label for="aggregateField" class="col-sm-2 control-label">Aggregate</label>
-        <div class="col-sm-8" style="margin-top: 12px">
+        <div class="col-sm-8" style="margin: 10px 0 0 0;">
           <input type="checkbox" id="aggregateField" v-model="curve.aggregate">
         </div>
       </div>
@@ -31,6 +31,21 @@
         <label for="styleField" class="col-sm-2 control-label">Style</label>
         <div class="col-sm-8">
           <input type="text" id="styleField" class="form-control" v-model="curve.style">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ResampleField" class="col-sm-2 control-label">Resample</label>
+        <div class="col-sm-8">
+          <input type="text" id="ResampleField" class="form-control" v-model="curve.resample">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="resampleHowField" class="col-sm-2 control-label">Resample how</label>
+        <div class="col-sm-8">
+          <select v-model="curve.resampleHow" id="resampleHowField" :disabled="curve.resample === null || curve.resample.length === 0" class="form-control">
+            <option disabled value=""></option>
+            <option v-for="option in resampleHowChoices" v-bind:value="option">{{ option }}</option>
+          </select>
         </div>
       </div>
     </form>
@@ -47,12 +62,24 @@
       value: Object,
       plot: Object
     },
+    data() {
+      return {
+        resampleHowChoices: ['sum', 'min', 'max', 'mean', 'median', 'var', 'std']
+      }
+    },
     computed: {
       curve() { return this.value }
     },
     methods: {
       removeCurve() {
         this.$store.commit('removeCurve', {curve: this.curve, plot: this.plot})
+      }
+    },
+    watch: {
+      'curve.resample'() {
+        if (this.curve.resample.length === 0) {
+          this.curve.resampleHow = ''
+        }
       }
     },
     components: {autocomplete}

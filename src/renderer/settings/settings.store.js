@@ -23,20 +23,34 @@ export default {
     databasePath(state) {
       state.databasePath = storage.get('databasePath')
       return state.databasePath
+    },
+    settings(state, getters) {
+      return {
+        pythonPath: getters.pythonPath,
+        generatorPath: getters.generatorPath,
+        databasePath: getters.databasePath
+      }
     }
   },
   mutations: {
-    updatePythonPath: (state, payload) => {
-      storage.set('pythonPath', payload.pythonPath)
-      state.pythonPath = payload.pythonPath
+    pythonPathUpdate: (state, payload) => {
+      storage.set('pythonPath', payload.value)
+      state.pythonPath = payload.value
     },
-    updateGeneratorPath: (state, payload) => {
-      storage.set('generatorPath', payload.generatorPath)
-      state.generatorPath = payload.generatorPath
+    generatorPathUpdate: (state, payload) => {
+      storage.set('generatorPath', payload.value)
+      state.generatorPath = payload.value
     },
-    updateDatabasePath: (state, payload) => {
-      storage.set('databasePath', payload.databasePath)
-      state.databasePath = payload.databasePath
+    databasePathUpdate: (state, payload) => {
+      storage.set('databasePath', payload.value)
+      state.databasePath = payload.value
+    }
+  },
+  actions: {
+    saveSettings: ({ commit }, payload) => {
+      for (let item of payload.fields) {
+        commit(item.name + 'Update', {value: item.value})
+      }
     }
   }
 }

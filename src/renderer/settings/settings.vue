@@ -4,7 +4,7 @@
     <form id="pathSettings" class="form-horizontale">
       <select-path v-for="f in fields" :value.sync="f.value" :label="f.label" :key="f.name"></select-path>
     </form>
-    <router-link :to="{name: 'base'}" tag="button" class="btn btn-sm btn-default pull-right">Close</router-link>
+    <router-link :to="{name: 'base'}" tag="button" class="btn btn-sm btn-default" id="closeBtn">Close</router-link>
   </div>
 </template>
 
@@ -57,5 +57,9 @@ export default {
 
 #pathSettings {
   margin-top: 4%
+}
+
+#closeBtn {
+  margin-top: 20px
 }
 </style>

@@ -11,15 +11,20 @@ export default class Curve {
   }
 
   toJSON() {
-    return {
+    const ignoreNull = ['style', 'resample', 'resampleHow']
+    let rtn = {
       title: this.title,
       x: this.x,
       y: this.y,
-      aggregate: this.aggregate,
-      style: this.style !== '' ? this.style : null,
-      resample: this.resample !== '' ? this.resample : null,
-      resampleHow: this.resampleHow !== '' ? this.resampleHow : null
+      aggregate: this.aggregate
     }
+
+    for (let item of ignoreNull) {
+      if (this[item] !== undefined && this[item] !== null && this[item] !== '') {
+        rtn[item] = this[item]
+      }
+    }
+    return rtn
   }
 
   static defineId(allCurves) {

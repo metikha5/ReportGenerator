@@ -26,15 +26,23 @@ export default class Plot {
   }
 
   toJSON() {
-    return {
+    const ignoreNull = ['group']
+
+    let rtn = {
       title: this.title,
       dateBegin: this.dateBegin,
       dateEnd: this.dateEnd,
       curves: this.curves.map((c) => c.toJSON()),
-      group: this.group !== '' ? this.group : null,
       displayLegend: this.displayLegend,
       legendPosition: this.legendPosition
     }
+
+    for (let item of ignoreNull) {
+      if (this[item] !== undefined && this[item] !== null && this[item] !== '') {
+        rtn[item] = this[item]
+      }
+    }
+    return rtn
   }
 
   static defineId(allPlots) {

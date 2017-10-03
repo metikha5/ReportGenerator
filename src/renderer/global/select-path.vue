@@ -10,8 +10,6 @@
 import { existsSync } from 'fs'
 import { remote } from 'electron'
 
-// const dialog = remote.dialog
-
 export default {
   name: 'SelectPath',
   props: ['value', 'label'],

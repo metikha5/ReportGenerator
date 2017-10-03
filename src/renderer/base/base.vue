@@ -8,6 +8,7 @@
           <a href="#" class="list-group-item borderless"
              v-for="plot in plots"
              :class="{'active': selectedPlot === plot}"
+             :key="plot.id"
              @click.prevent="selectPlot(plot)">
             {{ plot.title }}
           </a>

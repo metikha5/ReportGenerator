@@ -50,10 +50,11 @@
     },
     computed: mapGetters(['notification']),
     methods: {
-      // TODO: Test each method in details
       loadFile() {
         if (this.$store.state.plot.plots.length !== 0 && this.$store.state.plot.arePlotsModified && FileHandler.selectedFile !== null) {
-          this.saveFile(false)
+          if (!confirm('Current file has not been saved, you will loose your changes !\nDo you want to continue ?')) {
+            return
+          }
         }
 
         FileHandler
@@ -76,11 +77,9 @@
 
       newDefinition() {
         if (FileHandler.selectedFile !== null && this.$store.state.plot.arePlotsModified) {
-          // if (!confirm('Current file has not been saved, you will loose your changes !\nDo you want to continue ?')) {
-          //   return
-          // }
-          // Is it better to auto-save the file or to notify the user ?
-          this.saveFile(false)
+          if (!confirm('Current file has not been saved, you will loose your changes !\nDo you want to continue ?')) {
+            return
+          }
         }
 
         // Ask the user to create a new file

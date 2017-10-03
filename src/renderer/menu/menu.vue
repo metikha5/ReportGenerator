@@ -48,10 +48,10 @@
         selectedFileDisplay: ''
       }
     },
-    computed: mapGetters(['notification']),
+    computed: mapGetters(['notification', 'plotsEmpty', 'arePlotsModified', 'plots']),
     methods: {
       loadFile() {
-        if (this.$store.state.plot.plots.length !== 0 && this.$store.state.plot.arePlotsModified && FileHandler.selectedFile !== null) {
+        if (!this.plotsEmpty && this.arePlotsModified && FileHandler.selectedFile !== null) {
           if (!confirm('Current file has not been saved, you will loose your changes !\nDo you want to continue ?')) {
             return
           }
@@ -76,7 +76,7 @@
       },
 
       newDefinition() {
-        if (FileHandler.selectedFile !== null && this.$store.state.plot.arePlotsModified) {
+        if (FileHandler.selectedFile !== null && this.arePlotsModified) {
           if (!confirm('Current file has not been saved, you will loose your changes !\nDo you want to continue ?')) {
             return
           }
@@ -97,7 +97,7 @@
 
       saveFile(notify=true) {
         FileHandler
-          .saveFile(this.$store.state.plot.plots.map((p) => p.toJSON()))
+          .saveFile(this.plots.map((p) => p.toJSON()))
           .then(() => {
             this.$store.commit('resetPlotsModified')
             if (notify) {
@@ -120,7 +120,7 @@
           return
         }
 
-        if (this.$store.state.plot.arePlotsModified === true) {
+        if (this.arePlotsModified === true) {
           this.saveFile(false)
         }
         EventBus.$emit('runGeneratorScript')

@@ -16,7 +16,8 @@ export default {
     arePlotsModified: state => state.arePlotsModified,
     getByID: (state) => (id) => {
       return state.plots.find(p => p.id === id)
-    }
+    },
+    plotsEmpty: (state) => state.plots.length === 0
   },
 
   mutations: {

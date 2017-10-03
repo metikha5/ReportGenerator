@@ -7,6 +7,7 @@
     <div class="list-group element-list">
       <a href="#" class="list-group-item borderless"
          v-for="curve in localPlot.curves"
+         :key="curve.id"
          :class="{'active': localPlot.selectedCurve == curve}"
          @click="selectCurve(curve)">
         {{ curve.title }}
@@ -57,7 +58,7 @@
         <label for="legendPosition" class="col-sm-3 control-label">Legend position</label>
         <div class="col-sm-8">
           <select v-model="localPlot.legendPosition" id="legendPosition" :disabled="localPlot.displayLegend === false" class="form-control">
-            <option v-for="option in legendPositionChoices" v-bind:value="option">{{ option }}</option>
+            <option v-for="option in legendPositionChoices" :key="option" v-bind:value="option">{{ option }}</option>
           </select>
         </div>
       </div>

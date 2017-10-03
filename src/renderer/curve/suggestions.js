@@ -24,7 +24,6 @@ export default {
       return [...definition.beginning, ...definition.firstPart]
     }
 
-    // TODO continue: use firstPart and secondPart, if they are null, use word as firstPart
     // If we only have the second part, we can do nothing
     if (context.firstPart === null && context.secondPart !== null) {
       return []

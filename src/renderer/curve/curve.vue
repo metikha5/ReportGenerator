@@ -44,7 +44,7 @@
         <div class="col-sm-8">
           <select v-model="curve.resampleHow" id="resampleHowField" :disabled="curve.resample === null || curve.resample.length === 0" class="form-control">
             <option disabled value=""></option>
-            <option v-for="option in resampleHowChoices" v-bind:value="option">{{ option }}</option>
+            <option v-for="option in resampleHowChoices" :key="option" v-bind:value="option">{{ option }}</option>
           </select>
         </div>
       </div>

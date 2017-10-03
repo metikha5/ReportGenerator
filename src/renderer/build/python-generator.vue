@@ -12,7 +12,7 @@
 
             <div class="modal-body">
                 <div id="output-countainer">
-                  <div v-for="item in output" :class="`output-${item.type}`">{{ item.message }}</div>
+                  <div v-for="item in output" :key="item" :class="`output-${item.type}`">{{ item.message }}</div>
                 </div>
             </div>
           </div>
@@ -56,10 +56,6 @@
       },
 
       run() {
-        //
-        // TODO: Important run does not work with current py file
-        //
-
         // TODO: detached mode ? https://trello.com/c/1TLsNd5K
         this.childProccess = spawn(this.pythonPath, ['-u', this.generatorPath, FileHandler.selectedFile, this.databasePath])
         this.childProccess.stdout.setEncoding('utf8')

@@ -14,6 +14,7 @@
 
       <ul class="dropdown-menu" style="width:100%">
         <li v-for="(suggestion, index) in matches"
+            :key="index"
             v-bind:class="{'active': isActive(index)}"
             @click="onClick(index)">
           <a href="#">{{ suggestion }}</a>

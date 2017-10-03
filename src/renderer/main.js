@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
-// TODO: Bootstrap modal not working, use  https://fr.vuejs.org/v2/examples/modal.html ?
 import BootstrapVue from 'bootstrap-vue'
 require('vue2-animate/dist/vue2-animate.min.css')
 
@@ -11,7 +10,6 @@ Vue.use(Vuex)
 Vue.use(VueRouter)
 Vue.config.productionTip = false
 
-// TODO: Move router in a separated file
 const router = new VueRouter({
   mode: 'hash',
   routes: [{

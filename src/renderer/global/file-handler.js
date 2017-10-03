@@ -22,7 +22,6 @@ class FileHandler {
           this.selectedFile = fileName
           resolve(fileName)
         } else {
-          // TODO: add except catch where used
           reject(new Error('No file selected'))
         }
       })
@@ -36,7 +35,6 @@ class FileHandler {
           this.selectedFile = fileNames[0]
           resolve(fileNames[0])
         } else {
-          // TODO: add except catch where used
           reject(new Error('No file selected'))
         }
       })

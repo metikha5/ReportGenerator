@@ -4,7 +4,7 @@
 
 import Plot from './plot-frame'
 import Curve from '../curve/curve-frame'
-import EventBus from '../global/event-bus'
+// import EventBus from '../global/event-bus'
 
 export default {
   state: {
@@ -31,15 +31,20 @@ export default {
 
     addCurve(state, { plot }) {
       let curves = state.plots.find(p => p.id === plot.id).curves
-      curves.push(new Curve(Curve.defineId(curves)))
+      let newCurve = new Curve(Curve.defineId(curves))
+
+      curves.push(newCurve)
+
+      // console.log(plot)
+      // console.log(state.plots)
     },
 
     removePlot(state, payload) {
-      const plotIndex = state.plots.findIndex((o) => payload.plot.id === o.id)
+      const plotIndex = state.plots.findIndex(o => payload.plot.id === o.id)
       if (plotIndex !== -1) {
         state.plots.splice(plotIndex, 1)
       }
-      EventBus.$emit('basicReset')
+      // EventBus.$emit('basicReset')
     },
 
     removeCurve(state, payload) {
@@ -49,9 +54,9 @@ export default {
       }
     },
 
-    updatePlot(state, { plot }) {
-      const i = state.plots.findIndex(p => p.id === plot.id)
-      Object.assign(state.plots[i], plot)
+    updatePlot(state, { plot, field, value }) {
+      let target = state.plots.find(p => p.id === plot.id)
+      Object.assign(target, {[field]: value})
     },
 
     selectCurve(state, payload) {

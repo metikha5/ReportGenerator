@@ -12,10 +12,10 @@ const store = new Vuex.Store({
     plot: PlotStore,
     notification: NotificationStore,
     settings: SettingsStore
-  }
+  },
   // Strict mode currently raise warning because selected curve
   // is modified outside of the store
-  // strict: true
+  strict: true
 })
 
 export default store

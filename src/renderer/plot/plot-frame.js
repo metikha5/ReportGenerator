@@ -21,10 +21,6 @@ export default class Plot {
     this.selectedCurve = null
   }
 
-  addCurve() {
-    this.curves.push(new Curve(Curve.defineId(this.curves)))
-  }
-
   toJSON() {
     const ignoreNull = ['group']
 

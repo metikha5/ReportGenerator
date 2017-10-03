@@ -68,6 +68,8 @@
 </template>
 
 <script>
+  /* global _ */
+
   export default {
     name: 'PlotView',
     props: {
@@ -80,8 +82,16 @@
       }
     },
     computed: {
-      localPlot() {
-        return this.value
+      localPlot: {
+        get() { return _.cloneDeep(this.value) }
+      }
+    },
+    watch: {
+      localPlot: {
+        handler: _.debounce(function() {
+          this.$store.commit('updatePlot', {plot: this.localPlot})
+        }, 500),
+        deep: true
       }
     },
     methods: {

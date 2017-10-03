@@ -3,6 +3,7 @@
  */
 
 import Plot from './plot-frame'
+import Curve from '../curve/curve-frame'
 import EventBus from '../global/event-bus'
 
 export default {
@@ -28,8 +29,9 @@ export default {
       state.plots.push(p)
     },
 
-    addCurve(state, payload) {
-      payload.plot.addCurve()
+    addCurve(state, { plot }) {
+      let curves = state.plots.find(p => p.id === plot.id).curves
+      curves.push(new Curve(Curve.defineId(curves)))
     },
 
     removePlot(state, payload) {
@@ -45,6 +47,11 @@ export default {
       if (curveIndex !== -1) {
         payload.plot.curves.splice(curveIndex, 1)
       }
+    },
+
+    updatePlot(state, { plot }) {
+      const i = state.plots.findIndex(p => p.id === plot.id)
+      Object.assign(state.plots[i], plot)
     },
 
     selectCurve(state, payload) {

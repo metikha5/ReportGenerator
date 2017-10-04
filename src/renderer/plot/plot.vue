@@ -6,9 +6,9 @@
     </div>
     <div class="list-group element-list">
       <a href="#" class="list-group-item borderless"
-         v-for="curve in localPlot.curves"
+         v-for="curve in plot.curves"
          :key="curve.id"
-         :class="{'active': localPlot.selectedCurve == curve}"
+         :class="{'active': plot.selectedCurve == curve}"
          @click="selectCurve(curve)">
         {{ curve.title }}
       </a>
@@ -20,45 +20,45 @@
       <div class="form-group">
         <label for="plotTitle" class="col-sm-3 control-label">Title</label>
         <div class="col-sm-8">
-          <!-- <input class="form-control" type="text" name="plotTitle" id="plotTitle" v-model="localPlot.title"> -->
-          <input class="form-control" type="text" name="plotTitle" id="plotTitle" :value="localPlot.title" @keyup.stop="updateField('title', $event.target.value)">
+          <!-- <input class="form-control" type="text" name="plotTitle" id="plotTitle" v-model="plot.title"> -->
+          <input class="form-control" type="text" name="plotTitle" id="plotTitle" :value="plot.title" @keyup.stop="updateField('title', $event.target.value)">
         </div>
       </div>
       <div class="form-group">
         <label for="dateBegin" class="col-sm-3 control-label">Date</label>
         <div class="col-sm-8">
-          From <input class="form-control" type="datetime-local" name="dateBegin" id="dateBegin" :value="localPlot.dateBegin">
-          To <input class="form-control" type="datetime-local" name="dateEnd" id="dateEnd" :value="localPlot.dateEnd">
+          From <input class="form-control" type="datetime-local" name="dateBegin" id="dateBegin" :value="plot.dateBegin">
+          To <input class="form-control" type="datetime-local" name="dateEnd" id="dateEnd" :value="plot.dateEnd">
         </div>
       </div>
       <div class="form-group">
         <label for="xLabel" class="col-sm-3 control-label">X label</label>
         <div class="col-sm-8">
-          <input class="form-control" type="text" name="xLabel" id="xLabel" :value="localPlot.xLabel" @keyup.stop="updateField('xLabel', $event.target.value)">
+          <input class="form-control" type="text" name="xLabel" id="xLabel" :value="plot.xLabel" @keyup.stop="updateField('xLabel', $event.target.value)">
         </div>
       </div>
       <div class="form-group">
         <label for="yLabel" class="col-sm-3 control-label">Y label</label>
         <div class="col-sm-8">
-          <input class="form-control" type="text" name="yLabel" id="yLabel" :value="localPlot.yLabel" @keyup.stop="updateField('yLabel', $event.target.value)">
+          <input class="form-control" type="text" name="yLabel" id="yLabel" :value="plot.yLabel" @keyup.stop="updateField('yLabel', $event.target.value)">
         </div>
       </div>
       <div class="form-group">
         <label for="groupInput" class="col-sm-3 control-label">Group</label>
         <div class="col-sm-8">
-          <input class="form-control" type="text" name="groupInput" id="groupInput" :value="localPlot.group" @keyup.stop="updateField('groupInput', $event.target.value)">
+          <input class="form-control" type="text" name="groupInput" id="groupInput" :value="plot.group" @keyup.stop="updateField('groupInput', $event.target.value)">
         </div>
       </div>
       <div class="form-group">
         <label for="displayLegend" class="col-sm-2 control-label">Display legend</label>
         <div class="col-sm-8" style="margin: 20px 0 0 28px;">
-          <input type="checkbox" id="displayLegend" :value="localPlot.displayLegend" @change="updateField('displayLegend', $event.target.checked)">
+          <input type="checkbox" id="displayLegend" :value="plot.displayLegend" @change="updateField('displayLegend', $event.target.checked)">
         </div>
       </div>
       <div class="form-group">
         <label for="legendPosition" class="col-sm-3 control-label">Legend position</label>
         <div class="col-sm-8">
-          <select :value="localPlot.legendPosition" id="legendPosition" :disabled="localPlot.displayLegend === false" class="form-control" @change="updateField('legendPosition', $event.target.value)">
+          <select :value="plot.legendPosition" id="legendPosition" :disabled="plot.displayLegend === false" class="form-control" @change="updateField('legendPosition', $event.target.value)">
             <option v-for="option in legendPositionChoices" :key="option" v-bind:value="option">{{ option }}</option>
           </select>
         </div>
@@ -81,17 +81,17 @@
       }
     },
     computed: {
-      localPlot: {
+      plot: {
         get() { return this.value }
       }
     },
     methods: {
       addCurve() {
-        this.$store.commit('addCurve', {plot: this.localPlot})
+        this.$store.commit('addCurve', {plot: this.plot})
       },
 
       selectCurve(curve) {
-        this.$store.commit('selectCurve', {plot: this.localPlot, curve})
+        this.$store.commit('selectCurve', {plot: this.plot, curve})
 
         // Strange behaviour, change the way to detect plots changes
         if (this.$store.state.plot.arePlotsModified === false) {
@@ -102,11 +102,11 @@
       },
 
       removePlot() {
-        this.$store.commit('removePlot', {plot: this.localPlot})
+        this.$store.commit('removePlot', {plot: this.plot})
       },
 
       updateField(field, value) {
-        this.$store.commit('updatePlot', {plot: this.localPlot, field, value})
+        this.$store.commit('updatePlot', {plot: this.plot, field, value})
       }
     }
   }

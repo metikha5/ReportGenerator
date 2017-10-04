@@ -4,7 +4,7 @@
 
 import Plot from './plot-frame'
 import Curve from '../curve/curve-frame'
-// import EventBus from '../global/event-bus'
+import EventBus from '../global/event-bus'
 
 export default {
   state: {
@@ -44,7 +44,7 @@ export default {
       if (plotIndex !== -1) {
         state.plots.splice(plotIndex, 1)
       }
-      // EventBus.$emit('basicReset')
+      EventBus.$emit('basicReset')
     },
 
     removeCurve(state, payload) {

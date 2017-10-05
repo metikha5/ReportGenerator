@@ -59,6 +59,12 @@ export default {
       Object.assign(target, {[field]: value})
     },
 
+    updateCurve(state, { plot, curve, field, value }) {
+      let targetPlot = state.plots.find(p => p.id === plot.id)
+      let targetCurve = targetPlot.curves.find(c => c.id === curve.id)
+      Object.assign(targetCurve, {[field]: value})
+    },
+
     selectCurve(state, payload) {
       payload.plot.selectedCurve = payload.curve
       // state.arePlotsModified = false

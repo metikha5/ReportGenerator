@@ -81,9 +81,7 @@
       }
     },
     computed: {
-      plot: {
-        get() { return this.value }
-      }
+      plot() { return this.value }
     },
     methods: {
       addCurve() {

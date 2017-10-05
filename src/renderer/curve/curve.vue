@@ -24,9 +24,7 @@
       <div class="form-group">
         <label for="aggregateField" class="col-sm-2 control-label">Aggregate</label>
         <div class="col-sm-8" style="margin: 10px 0 0 0;">
-          {{curve.aggregate}}
-          <!-- <input type="checkbox" id="aggregateField" :value="curve.aggregate" @change="updateField('aggregate', $event.target.checked)"> -->
-          <input type="checkbox" id="aggregateField" :value="curve.aggregate" @update="updateField('aggregate', $event.target.checked)">
+          <input type="checkbox" id="aggregateField" :value="curve.aggregate" @change="updateField('aggregate', $event.target.checked)">
         </div>
       </div>
       <div class="form-group">
@@ -85,6 +83,10 @@
         if (this.curve.resample === null || this.curve.resample.length === 0) {
           this.updateField('resampleHow', '')
         }
+      },
+
+      'curve.aggregate'(value) {
+        document.querySelector('#aggregateField').checked = value
       }
     },
     components: {autocomplete}

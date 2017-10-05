@@ -52,6 +52,7 @@
       <div class="form-group">
         <label for="displayLegend" class="col-sm-2 control-label">Display legend</label>
         <div class="col-sm-8" style="margin: 20px 0 0 28px;">
+          {{plot.displayLegend}}
           <input type="checkbox" id="displayLegend" :value="plot.displayLegend" @change="updateField('displayLegend', $event.target.checked)">
         </div>
       </div>
@@ -82,6 +83,12 @@
     },
     computed: {
       plot() { return this.value }
+    },
+    watch: {
+      'plot.displayLegend'(value) {
+        console.log(value)
+        document.querySelector('#displayLegend').checked = value
+      }
     },
     methods: {
       addCurve() {

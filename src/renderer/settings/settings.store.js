@@ -7,21 +7,18 @@ const storage = new ElectronStorage()
 
 export default {
   state: {
-    pythonPath: null,
-    generatorPath: null,
-    databasePath: null
+    pythonPath: storage.get('pythonPath'),
+    generatorPath: storage.get('generatorPath'),
+    databasePath: storage.get('databasePath')
   },
   getters: {
     pythonPath(state) {
-      state.pythonPath = storage.get('pythonPath')
       return state.pythonPath
     },
     generatorPath(state) {
-      state.generatorPath = storage.get('generatorPath')
       return state.generatorPath
     },
     databasePath(state) {
-      state.databasePath = storage.get('databasePath')
       return state.databasePath
     },
     settings(state, getters) {
@@ -33,6 +30,11 @@ export default {
     }
   },
   mutations: {
+    refreshConfig: (state) => {
+      state.databasePath = storage.get('databasePath')
+      state.generatorPath = storage.get('generatorPath')
+      state.pythonPath = storage.get('pythonPath')
+    },
     pythonPathUpdate: (state, payload) => {
       storage.set('pythonPath', payload.value)
       state.pythonPath = payload.value

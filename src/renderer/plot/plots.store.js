@@ -9,6 +9,7 @@ import EventBus from '../global/event-bus'
 export default {
   state: {
     plots: [],
+    savedPlots: '[]',
     arePlotsModified: false
   },
 
@@ -34,9 +35,6 @@ export default {
       let newCurve = new Curve(Curve.defineId(curves))
 
       curves.push(newCurve)
-
-      // console.log(plot)
-      // console.log(state.plots)
     },
 
     removePlot(state, payload) {
@@ -78,22 +76,21 @@ export default {
       // Create set of Plot based on a list of objects
       for (let v of payload.rawPlots) {
         const plotId = Plot.defineId(state.plots)
-        // noinspection JSUnfilteredForInLoop
         state.plots.push(new Plot(plotId, v.title, v.date_begin, v.date_end, v.curves, v.group, v.displayLegend, v.legendPosition))
       }
     },
 
     reset(state) {
       state.plots = []
-      state.arePlotsModified = false
     },
 
     plotsModified(state) {
-      state.arePlotsModified = true
+      state.arePlotsModified = JSON.stringify(state.plots) !== state.savedPlots
     },
 
     resetPlotsModified(state) {
       state.arePlotsModified = false
+      state.savedPlots = JSON.stringify(state.plots)
     }
   }
 }

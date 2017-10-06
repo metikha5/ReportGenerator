@@ -70,7 +70,6 @@
             this.$store.dispatch('notify', {notification: e})
           })
           .then(() => {
-            // TODO: TO UPDATE WITH VUEX
             this.$store.commit('resetPlotsModified')
           })
       },
@@ -89,6 +88,7 @@
 
           // Reset main view
           this.$store.commit('reset')
+          this.$store.commit('resetPlotsModified')
           EventBus.$emit('basicReset')
         }, (err) => {
           this.$store.dispatch('notify', {notification: err})

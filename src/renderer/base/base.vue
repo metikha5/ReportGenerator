@@ -2,7 +2,6 @@
 <div>
   <div id="content">
     <div class="row">
-      {{ arePlotsModified }}
       <div id="base" class="col-xs-3">
         <button class="btn btn-default btn-xs center-block" @click="addPlot">Add plot</button>
         <div class="list-group element-list">
@@ -59,14 +58,14 @@
         return curveInList
       }
     },
-    // watch: {
-    //   'plots': {
-    //     handler: function() {
-    //       this.$store.commit('plotsModified')
-    //     },
-    //     deep: true
-    //   }
-    // },
+    watch: {
+      'plots': {
+        handler: function() {
+          this.$store.commit('plotsModified')
+        },
+        deep: true
+      }
+    },
     mounted() {
       EventBus.$on('basicReset', this.basicReset)
     },

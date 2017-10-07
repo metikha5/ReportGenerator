@@ -13,10 +13,10 @@
         {{ curve.title }}
       </a>
     </div>
-    <div style="margin-top: 30px; margin-bottom: -15px">
+    <div style="margin-top: 30px;">
       <h3>Plot configuration</h3>
     </div>
-    <form class="form-horizontal" style="margin-top: 42px">
+    <form class="form-horizontal" style="margin-top: 25px">
       <div class="form-group">
         <label for="plotTitle" class="col-sm-3 control-label">Title</label>
         <div class="col-sm-8">

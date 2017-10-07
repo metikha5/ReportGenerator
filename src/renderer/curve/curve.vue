@@ -2,7 +2,7 @@
   <div>
     <button class="btn btn-danger btn-xs center-block" @click="removeCurve" style="width: 100px">Remove curve</button>
 
-    <form class="form-horizontal" style="margin-top: 42px">
+    <form class="form-horizontal" style="margin-top: 22px">
       <div class="form-group">
         <label for="curveTitle" class="col-sm-2 control-label">Title</label>
         <div class="col-sm-8">

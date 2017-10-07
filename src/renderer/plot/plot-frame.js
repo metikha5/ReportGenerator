@@ -4,8 +4,8 @@ export default class Plot {
   constructor(id, title=null, dateBegin=null, dateEnd=null, curves=null, group=null, displayLegend=true, legendPosition='best') {
     this.id = id
     this.title = title
-    this.dateBegin = dateBegin
-    this.dateEnd = dateEnd
+    this.dateBegin = typeof dateBegin === 'string' ? new Date(dateBegin) : dateBegin
+    this.dateEnd = typeof dateEnd === 'string' ? new Date(dateEnd) : dateEnd
     this.group = group
     this.displayLegend = displayLegend
     this.legendPosition = legendPosition

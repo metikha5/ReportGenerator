@@ -20,15 +20,39 @@
       <div class="form-group">
         <label for="plotTitle" class="col-sm-3 control-label">Title</label>
         <div class="col-sm-8">
-          <!-- <input class="form-control" type="text" name="plotTitle" id="plotTitle" v-model="plot.title"> -->
           <input class="form-control" type="text" name="plotTitle" id="plotTitle" :value="plot.title" @keyup.stop="updateField('title', $event.target.value)">
         </div>
       </div>
       <div class="form-group">
         <label for="dateBegin" class="col-sm-3 control-label">Date</label>
         <div class="col-sm-8">
-          From <input class="form-control" type="datetime-local" name="dateBegin" id="dateBegin" :value="plot.dateBegin">
-          To <input class="form-control" type="datetime-local" name="dateEnd" id="dateEnd" :value="plot.dateEnd">
+          <datepicker
+            :class="{'empty-datefield': plot.dateBegin === null}"
+            :bootstrapStyling="true"
+            :format="'dd/MM/yyyy'" 
+            :clear-button="true"
+            :clear-button-icon="'glyphicon'"
+            :placeholder="'From'"
+            :monday-first="true"
+            name="dateBegin" 
+            id="dateBegin"
+            :value="plot.dateBegin"
+            v-on:selected="updateDateField('dateBegin', $event)">
+          </datepicker>
+          <div class="spacer"></div>
+          <datepicker 
+            :class="{'empty-datefield': plot.dateEnd === null}"
+            :bootstrapStyling="true" 
+            :format="'dd/MM/yyyy'"
+            :clear-button="true"
+            :clear-button-icon="'glyphicon'"
+            :placeholder="'To'"
+            :monday-first="true"
+            name="dateEnd" 
+            id="dateEnd" 
+            :value="plot.dateEnd" 
+            v-on:selected="updateDateField('dateEnd', $event)">
+          </datepicker>
         </div>
       </div>
       <div class="form-group">
@@ -69,11 +93,14 @@
 </template>
 
 <script>
+  import Datepicker from 'vuejs-datepicker'
+  
   export default {
     name: 'PlotView',
     props: {
       value: Object
     },
+    components: { Datepicker },
     data() {
       return {
         legendPositionChoices: ['best', 'upper right', 'upper left', 'lower left', 'lower right',
@@ -95,13 +122,6 @@
 
       selectCurve(curve) {
         this.$store.commit('selectCurve', {plot: this.plot, curve})
-
-        // Strange behaviour, change the way to detect plots changes
-        // if (this.$store.state.plot.arePlotsModified === false) {
-        //   setTimeout(() => {
-        //     this.$store.commit('resetPlotsModified')
-        //   }, 5)
-        // }
       },
 
       removePlot() {
@@ -110,7 +130,30 @@
 
       updateField(field, value) {
         this.$store.commit('updatePlot', {plot: this.plot, field, value})
+      },
+
+      updateDateField(field, value) {
+        if (value !== null && value instanceof Date) {
+          value.setHours(0, 0, 0)
+        }
+
+        this.updateField(field, value)
       }
     }
   }
 </script>
+
+<style>
+.vdp-datepicker .form-control:read-only {
+  background-color: white;
+}
+
+.spacer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.empty-datefield {
+  width: 50%;
+}
+</style>

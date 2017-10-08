@@ -10,7 +10,8 @@
              @keydown.up.prevent="up"
              @keydown.esc="escape"
              @click="jump"
-             @input="onChange"/>
+             @input="onChange"
+             @blur="escape"/>
 
       <ul class="dropdown-menu suggestions" style="width:100%">
         <li v-for="(suggestion, index) in matches"

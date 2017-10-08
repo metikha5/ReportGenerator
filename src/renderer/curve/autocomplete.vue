@@ -12,7 +12,7 @@
              @click="jump"
              @input="onChange"/>
 
-      <ul class="dropdown-menu" style="width:100%">
+      <ul class="dropdown-menu suggestions" style="width:100%">
         <li v-for="(suggestion, index) in matches"
             :key="index"
             v-bind:class="{'active': isActive(index)}"
@@ -229,4 +229,12 @@
 </script>
 
 <style>
+.suggestions {
+  max-height: 200px;
+  overflow-y: scroll;
+}
+.suggestions::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
 </style>

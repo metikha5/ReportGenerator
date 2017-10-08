@@ -48,7 +48,7 @@
         selectedFileDisplay: ''
       }
     },
-    computed: mapGetters(['notification', 'plotsEmpty', 'arePlotsModified', 'plots']),
+    computed: mapGetters(['notification', 'plotsEmpty', 'arePlotsModified', 'plots', 'areSettingsValid']),
     methods: {
       loadFile() {
         if (!this.plotsEmpty && this.arePlotsModified && FileHandler.selectedFile !== null) {
@@ -117,6 +117,13 @@
       executeGenerator() {
         if (FileHandler.selectedFile === null) {
           alert('No definition file selected. Please load or create one.')
+          return
+        }
+
+        console.log(this.areSettingsValid)
+        if (!this.areSettingsValid) {
+          alert('Error found in settings: please visit the settings section to fix it')
+          // this.$router.push({name: 'settings'})  // TODO: not correctly working ... unable to find the source of the problem
           return
         }
 

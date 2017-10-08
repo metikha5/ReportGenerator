@@ -3,6 +3,7 @@
  */
 
 import ElectronStorage from 'electron-store'
+import { existsSync } from 'fs'
 const storage = new ElectronStorage()
 
 export default {
@@ -27,6 +28,14 @@ export default {
         generatorPath: getters.generatorPath,
         databasePath: getters.databasePath
       }
+    },
+    areSettingsValid(state) {
+      for (let item of [state.pythonPath, state.generatorPath, state.databasePath]) {
+        if (item === null || !existsSync(item)) {
+          return false
+        }
+      }
+      return true
     }
   },
   mutations: {

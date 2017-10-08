@@ -74,8 +74,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="displayLegend" class="col-sm-2 control-label">Display legend</label>
-        <div class="col-sm-8" style="margin: 20px 0 0 28px;">
+        <label for="displayLegend" class="col-sm-3 control-label">Display legend</label>
+        <div class="col-sm-8" style="margin: 10px 0 0 0;">
           <input type="checkbox" id="displayLegend" :value="plot.displayLegend" @change="updateField('displayLegend', $event.target.checked)" checked>
         </div>
       </div>

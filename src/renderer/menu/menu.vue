@@ -19,6 +19,7 @@
           <li class="divider"></li>
           <li><router-link :to="{name: 'settings'}"  class="pull-right"><span class="glyphicon glyphicon glyphicon-cog icon-shift"></span> Settings</router-link></li>
         </ul>
+        <div class="navbar-text white-divider" v-if="selectedFileDisplay !== ''">&nbsp;</div>
         <p class="navbar-text small selected-file" v-if="selectedFileDisplay !== ''">{{ selectedFileDisplay }}</p>
 
         <div class="nav navbar-nav navbar-right">
@@ -151,6 +152,13 @@
   }
 
   .selected-file {
-    margin-top: 18px;
+    margin-top: 20px;
+  }
+
+  .white-divider {
+    border-left: solid 1px #c4c4c4;
+    height: 30px;
+    margin-left: 0;
+    margin-right: -5px;
   }
 </style>

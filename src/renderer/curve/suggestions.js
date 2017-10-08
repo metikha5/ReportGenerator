@@ -24,7 +24,7 @@ export default {
       return [...definition.beginning, ...definition.firstPart]
     }
 
-    // If we only have the second part, we can do nothing
+    // If we only have the second part, we can't do nothing
     if (context.firstPart === null && context.secondPart !== null) {
       return []
     }
@@ -32,7 +32,11 @@ export default {
     if (context.editedPart === 'first') {
       return definition.firstPart
     } else if (context.editedPart === 'second' && context.firstPart !== '') {
-      return definition.secondPart[context.firstPart]
+      if (context.firstPart in definition.secondPart) {
+        return definition.secondPart[context.firstPart]
+      } else {
+        return Object.values(definition.secondPart).reduce((a, b) => a.concat(b))
+      }
     }
 
     return []

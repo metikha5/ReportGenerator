@@ -168,13 +168,11 @@
       },
 
       down() {
-        if (this.matches.length === 0) {
-          if (this.open === false) {
-            this.open = true
-            this.current = 0
-            this.updateMatches()
-          }
-        } else if (this.current < this.matches.length - 1) {
+        if (this.open === false) {
+          this.open = true
+          this.current = 0
+          this.updateMatches()
+        } else if (this.matches.length !== 0 && this.current < this.matches.length - 1) {
           this.current++
         }
       },

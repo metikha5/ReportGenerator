@@ -1,6 +1,6 @@
 {
   "name": "report-generator",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "author": "Michael Bremec <michael@bremec.fr>",
   "description": "GPC report generator",
   "license": "WTFPL",

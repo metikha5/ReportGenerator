@@ -20,7 +20,12 @@
           <li><router-link :to="{name: 'settings'}"  class="pull-right"><span class="glyphicon glyphicon glyphicon-cog icon-shift"></span> Settings</router-link></li>
         </ul>
         <div class="navbar-text white-divider" v-if="selectedFileDisplay !== ''">&nbsp;</div>
-        <p class="navbar-text small selected-file" v-if="selectedFileDisplay !== ''">{{ selectedFileDisplay }}</p>
+        <p class="navbar-text small selected-file" v-if="selectedFileDisplay !== ''">
+          <span v-if="arePlotsModified" @mouseover="overFilename = true" @mouseout="overFilename = false">
+            <b>{{ selectedFileDisplay }}</b> <span v-if="overFilename">(file not saved)</span>
+          </span>
+          <span v-else>{{ selectedFileDisplay }}</span>
+        </p>
       </div>
 
     </div>
@@ -39,7 +44,8 @@
     name: 'MenuView',
     data() {
       return {
-        selectedFileDisplay: ''
+        selectedFileDisplay: '',
+        overFilename: false
       }
     },
     computed: mapGetters(['plotsEmpty', 'arePlotsModified', 'plots', 'areSettingsValid']),
@@ -144,7 +150,7 @@
   }
 
   .selected-file {
-    margin-top: 20px;
+    margin-top: 22px;
   }
 
   .white-divider {

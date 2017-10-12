@@ -54,6 +54,7 @@
       }
     },
     mounted() {
+      console.log(this.dropdown)
       this.scrolling.target = document.getElementById('suggestions')
     },
     computed: {

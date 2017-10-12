@@ -18,7 +18,8 @@
             :key="index"
             v-bind:class="{'active': isActive(index)}"
             @click="onClick(index)"
-            @mouseover="overDropdown(index)" >
+            @mouseover="overDropdown(index)"
+            @mousewheel="dropdownWheel()">
           <a href="#">{{ suggestion }}</a>
         </li>
       </ul>
@@ -200,7 +201,7 @@
           this.current++
 
           // Handle scrolling
-          if (this.current + 1 > this.scrolling.lastVisible) {
+          if (this.current > this.scrolling.lastVisible) {
             // We scroll
             // Update first and last visible
             this.scrolling.firstVisible++
@@ -268,11 +269,21 @@
           this.scrolling.target.scrollTop += this.scrolling.elementSize
         }
       },
+      dropdownWheel() {
+        // Adding a delay increase accuracy
+        setTimeout(() => {
+          let first = Math.floor(this.scrolling.target.scrollTop / this.scrolling.elementSize)
+          let last = first + this.scrolling.visibleSize - 1
+
+          this.scrolling.firstVisible = first
+          this.scrolling.lastVisible = last
+        }, 40)
+      },
 
       setScrollingVisibility() {
         // Init "scrolling" data to handle correct content visibility when moving in dropdown
         this.scrolling.firstVisible = 0
-        this.scrolling.lastVisible = this.matches.length >= this.scrolling.visibleSize ? this.scrolling.visibleSize : this.matches.length
+        this.scrolling.lastVisible = this.matches.length >= this.scrolling.visibleSize ? this.scrolling.visibleSize - 1 : this.matches.length
       }
     }
   }

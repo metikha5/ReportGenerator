@@ -21,14 +21,6 @@
         </ul>
         <div class="navbar-text white-divider" v-if="selectedFileDisplay !== ''">&nbsp;</div>
         <p class="navbar-text small selected-file" v-if="selectedFileDisplay !== ''">{{ selectedFileDisplay }}</p>
-
-        <div class="nav navbar-nav navbar-right">
-          <transition name="fadeUp">
-            <p class="navbar-text" v-if="notification !== null">
-              {{ notification }}
-            </p>
-          </transition>
-        </div>
       </div>
 
     </div>
@@ -50,7 +42,7 @@
         selectedFileDisplay: ''
       }
     },
-    computed: mapGetters(['notification', 'plotsEmpty', 'arePlotsModified', 'plots', 'areSettingsValid']),
+    computed: mapGetters(['plotsEmpty', 'arePlotsModified', 'plots', 'areSettingsValid']),
     methods: {
       loadFile() {
         if (!this.plotsEmpty && this.arePlotsModified && FileHandler.selectedFile !== null) {
@@ -118,12 +110,12 @@
 
       executeGenerator() {
         if (FileHandler.selectedFile === null) {
-          this.$notify({type: 'warning', title: 'No file selected !', text: 'No definition file selected. Please load or create one and try again'})
+          this.$notify({type: 'error', title: 'No file selected !', text: 'No definition file selected. Please load or create one and try again'})
           return
         }
 
         if (!this.areSettingsValid) {
-          this.$notify({type: 'warning', title: 'Invalid settings', text: 'Error found in settings: please visit the settings section to fix it'})
+          this.$notify({type: 'error', title: 'Invalid settings', text: 'Error found in settings: please visit the settings section to fix it'})
           // this.$router.push({name: 'settings'})  // TODO: not correctly working ... unable to find the source of the problem
           return
         }

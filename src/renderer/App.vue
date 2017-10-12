@@ -10,11 +10,25 @@
 
 <script>
   import MenuView from './menu/menu'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'report-generator',
     components: {
       MenuView
+    },
+    computed: mapGetters(['arePlotsModified']),
+    mounted() {
+      window.onbeforeunload = (e) => {
+        if (this.arePlotsModified) {
+          var answer = confirm('Your current file has not been saved, do you really want to close the application ?')
+          e.returnValue = answer
+
+          if (answer) {
+            require('electron').remote.getCurrentWindow().destroy()
+          }
+        }
+      }
     }
   }
 </script>

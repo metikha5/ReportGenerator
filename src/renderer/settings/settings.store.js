@@ -60,7 +60,7 @@ export default {
   },
   actions: {
     saveSettings: ({ commit }, payload) => {
-      logger.info(`Settings saved: ${payload.fields}`)
+      logger.info(`Settings saved: ${payload.fields.map(s => s.name + ': ' + s.value).join(', ')}`)
       for (let item of payload.fields) {
         commit(item.name + 'Update', {value: item.value})
       }

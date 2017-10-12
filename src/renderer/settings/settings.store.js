@@ -4,6 +4,7 @@
 
 import ElectronStorage from 'electron-store'
 import { existsSync } from 'fs'
+import logger from '../logging'
 const storage = new ElectronStorage()
 
 export default {
@@ -59,6 +60,7 @@ export default {
   },
   actions: {
     saveSettings: ({ commit }, payload) => {
+      logger.info(`Settings saved: ${payload.fields}`)
       for (let item of payload.fields) {
         commit(item.name + 'Update', {value: item.value})
       }

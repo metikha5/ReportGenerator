@@ -28,6 +28,7 @@
 
   import EventBus from '../global/event-bus'
   import FileHandler from '../global/file-handler'
+  import logger from '../logging'
 
   export default {
     name: 'pythonGenerator',
@@ -47,7 +48,9 @@
         try {
           this.run()
           this.showModal = true
-        } catch (e) {}
+        } catch (e) {
+          logger.error(`Unknown error openModal python-generator: ${e}`)
+        }
       },
 
       closeModal() {
@@ -56,6 +59,7 @@
       },
 
       run() {
+        logger.info('Python generator execution started')
         // TODO: detached mode ? https://trello.com/c/1TLsNd5K
         this.childProccess = spawn(this.pythonPath, ['-u', this.generatorPath, FileHandler.selectedFile, this.databasePath])
         this.childProccess.stdout.setEncoding('utf8')
@@ -83,6 +87,7 @@
           } else {
             message = data
           }
+          logger.error(`Failure during python script execution:\n${message}`)
 
           if (message.indexOf('\n') !== -1) {
             const splt = message.split('\n')
@@ -105,6 +110,7 @@
           }
           this.output.push({type: 'info', message: message})
           scrollDown()
+          logger.info('Script execution stopped')
         })
       },
 

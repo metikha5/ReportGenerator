@@ -65,7 +65,6 @@ export default {
 
     selectCurve(state, payload) {
       payload.plot.selectedCurve = payload.curve
-      // state.arePlotsModified = false
     },
 
     createFromList(state, payload) {

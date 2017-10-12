@@ -41,6 +41,7 @@
 
   import EventBus from '../global/event-bus'
   import FileHandler from '../global/file-handler'
+  import logger from '../logging'
 
   export default {
     name: 'MenuView',
@@ -68,6 +69,7 @@
             this.$store.dispatch('notify', {notification: 'File loaded !'})
             this.updateDisplayedFile()
           }, (e) => {
+            logger.error(`Error while loading file: ${FileHandler.selectedFile}\n${e}`)
             this.$store.dispatch('notify', {notification: e})
           })
           .then(() => {
@@ -92,6 +94,7 @@
           this.$store.commit('resetPlotsModified')
           EventBus.$emit('basicReset')
         }, (err) => {
+          logger.error(`Error while creating new file: ${err}`)
           this.$store.dispatch('notify', {notification: err})
         })
       },
@@ -106,6 +109,7 @@
             }
           }, (err) => {
             if (notify) {
+              logger.error(`Error saving file: ${FileHandler.selectedFile} ->\n${err}`)
               this.$store.dispatch('notify', {notification: err})
             }
           })

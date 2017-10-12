@@ -94,7 +94,8 @@
 
 <script>
   import Datepicker from 'vuejs-datepicker'
-  
+  import logger from '../logging'
+
   export default {
     name: 'PlotView',
     props: {
@@ -106,6 +107,12 @@
         legendPositionChoices: ['best', 'upper right', 'upper left', 'lower left', 'lower right',
           'right', 'center left', 'center right', 'lower center', 'upper center', 'center']
       }
+    },
+    mounted() {
+      logger.error('An error')
+      let a = new Error('Hey')
+      logger.info('An info')
+      throw a
     },
     computed: {
       plot() { return this.value }

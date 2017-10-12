@@ -94,7 +94,6 @@
 
 <script>
   import Datepicker from 'vuejs-datepicker'
-  import logger from '../logging'
 
   export default {
     name: 'PlotView',

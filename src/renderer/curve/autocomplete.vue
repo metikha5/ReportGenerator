@@ -13,7 +13,7 @@
              @input="onChange"
              @blur="escape"/>
 
-      <ul class="dropdown-menu suggestions" style="width:100%">
+      <ul id="suggestions" class="dropdown-menu" style="width:100%">
         <li v-for="(suggestion, index) in matches"
             :key="index"
             v-bind:class="{'active': isActive(index)}"
@@ -41,8 +41,18 @@
         current: 0,
         matches: [],
         context: null,
-        cursorPosition: 0  // TODO: update cursor position when the user click in the input
+        cursorPosition: 0,  // TODO: update cursor position when the user click in the input
+        scrolling: {
+          firstVisible: 0,
+          lastVisible: 0,
+          visibleSize: 7,
+          elementSize: 27,
+          target: null
+        }
       }
+    },
+    mounted() {
+      this.scrolling.target = document.getElementById('suggestions')
     },
     computed: {
       openSuggestion() {
@@ -63,6 +73,8 @@
       updateMatches() {
         this.defineContext()
         let suggestions = Suggestions.getSuggestion(this.context)
+
+        // Set suggestions in dropdown
         if (this.context === null) {
           this.matches = []
         } else {
@@ -70,6 +82,7 @@
             return str.indexOf(this.context.word) >= 0 && this.context.word !== str
           })
         }
+        this.setScrollingVisibility()
       },
 
       defineContext() {
@@ -164,6 +177,16 @@
       up() {
         if (this.current > 0) {
           this.current--
+
+          // Handle scrolling
+          if (this.current < this.scrolling.firstVisible) {
+            this.scrolling.firstVisible--
+            this.scrolling.lastVisible--
+            this.scrollDropdown('top')
+          }
+        } else {
+          // Scrolled to the top
+          this.setScrollingVisibility()
         }
       },
 
@@ -174,6 +197,15 @@
           this.updateMatches()
         } else if (this.matches.length !== 0 && this.current < this.matches.length - 1) {
           this.current++
+
+          // Handle scrolling
+          if (this.current + 1 > this.scrolling.lastVisible) {
+            // We scroll
+            // Update first and last visible
+            this.scrolling.firstVisible++
+            this.scrolling.lastVisible++
+            this.scrollDropdown('bottom')
+          }
         }
       },
 
@@ -222,17 +254,31 @@
         } else {
           this.cursorPosition = beginning.length + toReplace.length
         }
+      },
+
+      scrollDropdown(direction) {
+        if (direction === 'top') {
+          this.scrolling.target.scrollTop -= this.scrolling.elementSize
+        } else if (direction === 'bottom') {
+          this.scrolling.target.scrollTop += this.scrolling.elementSize
+        }
+      },
+
+      setScrollingVisibility() {
+        // Init "scrolling" data to handle correct content visibility when moving in dropdown
+        this.scrolling.firstVisible = 0
+        this.scrolling.lastVisible = this.matches.length >= this.scrolling.visibleSize ? this.scrolling.visibleSize : this.matches.length
       }
     }
   }
 </script>
 
 <style>
-.suggestions {
+#suggestions {
   max-height: 200px;
   overflow-y: scroll;
 }
-.suggestions::-webkit-scrollbar {
+#suggestions::-webkit-scrollbar {
     width: 0px;
     background: transparent;
 }

@@ -44,7 +44,7 @@
         matches: [],
         context: null,
         cursorPosition: 0,  // TODO: update cursor position when the user click in the input
-        scrolling: {
+        dropdown: {
           firstVisible: 0,
           lastVisible: 0,
           visibleSize: 7,
@@ -54,8 +54,7 @@
       }
     },
     mounted() {
-      console.log(this.dropdown)
-      this.scrolling.target = document.getElementById('suggestions')
+      this.dropdown.target = document.getElementById('suggestions')
     },
     computed: {
       openSuggestion() {
@@ -182,9 +181,9 @@
           this.current--
 
           // Handle scrolling
-          if (this.current < this.scrolling.firstVisible) {
-            this.scrolling.firstVisible--
-            this.scrolling.lastVisible--
+          if (this.current < this.dropdown.firstVisible) {
+            this.dropdown.firstVisible--
+            this.dropdown.lastVisible--
             this.scrollDropdown('top')
           }
         } else {
@@ -202,11 +201,11 @@
           this.current++
 
           // Handle scrolling
-          if (this.current > this.scrolling.lastVisible) {
+          if (this.current > this.dropdown.lastVisible) {
             // We scroll
             // Update first and last visible
-            this.scrolling.firstVisible++
-            this.scrolling.lastVisible++
+            this.dropdown.firstVisible++
+            this.dropdown.lastVisible++
             this.scrollDropdown('bottom')
           }
         }
@@ -265,26 +264,26 @@
 
       scrollDropdown(direction) {
         if (direction === 'top') {
-          this.scrolling.target.scrollTop -= this.scrolling.elementSize
+          this.dropdown.target.scrollTop -= this.dropdown.elementSize
         } else if (direction === 'bottom') {
-          this.scrolling.target.scrollTop += this.scrolling.elementSize
+          this.dropdown.target.scrollTop += this.dropdown.elementSize
         }
       },
       dropdownWheel() {
         // Adding a delay increase accuracy
         setTimeout(() => {
-          let first = Math.floor(this.scrolling.target.scrollTop / this.scrolling.elementSize)
-          let last = first + this.scrolling.visibleSize - 1
+          let first = Math.floor(this.dropdown.target.scrollTop / this.dropdown.elementSize)
+          let last = first + this.dropdown.visibleSize - 1
 
-          this.scrolling.firstVisible = first
-          this.scrolling.lastVisible = last
+          this.dropdown.firstVisible = first
+          this.dropdown.lastVisible = last
         }, 40)
       },
 
       setScrollingVisibility() {
         // Init "scrolling" data to handle correct content visibility when moving in dropdown
-        this.scrolling.firstVisible = 0
-        this.scrolling.lastVisible = this.matches.length >= this.scrolling.visibleSize ? this.scrolling.visibleSize - 1 : this.matches.length
+        this.dropdown.firstVisible = 0
+        this.dropdown.lastVisible = this.matches.length >= this.dropdown.visibleSize ? this.dropdown.visibleSize - 1 : this.matches.length
       }
     }
   }

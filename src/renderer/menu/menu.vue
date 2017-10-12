@@ -125,7 +125,6 @@
           return
         }
 
-        console.log(this.areSettingsValid)
         if (!this.areSettingsValid) {
           alert('Error found in settings: please visit the settings section to fix it')
           // this.$router.push({name: 'settings'})  // TODO: not correctly working ... unable to find the source of the problem

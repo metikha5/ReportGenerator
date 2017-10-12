@@ -59,6 +59,7 @@
       },
 
       run() {
+        this.$notify({title: 'Generator started', text: 'Python generator execution started'})
         logger.info('Python generator execution started')
         // TODO: detached mode ? https://trello.com/c/1TLsNd5K
         this.childProccess = spawn(this.pythonPath, ['-u', this.generatorPath, FileHandler.selectedFile, this.databasePath])

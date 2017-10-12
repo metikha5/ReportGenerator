@@ -4,6 +4,7 @@
     <transition name="mfade" mode="out-in">
       <router-view></router-view>
     </transition>
+    <notifications animation-type="velocity" :max="4" style="cursor: pointer" />
   </div>
 </template>
 

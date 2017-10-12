@@ -66,11 +66,10 @@
             EventBus.$emit('basicReset')
 
             this.$store.commit('createFromList', {rawPlots})
-            this.$store.dispatch('notify', {notification: 'File loaded !'})
+            this.$notify({type: 'success', title: 'File loaded !', text: `${path.basename(FileHandler.selectedFile)} has correctly been loaded`})
             this.updateDisplayedFile()
           }, (e) => {
             logger.error(`Error while loading file: ${FileHandler.selectedFile}\n${e}`)
-            this.$store.dispatch('notify', {notification: e})
           })
           .then(() => {
             this.$store.commit('resetPlotsModified')
@@ -95,7 +94,6 @@
           EventBus.$emit('basicReset')
         }, (err) => {
           logger.error(`Error while creating new file: ${err}`)
-          this.$store.dispatch('notify', {notification: err})
         })
       },
 
@@ -105,12 +103,11 @@
           .then(() => {
             this.$store.commit('resetPlotsModified')
             if (notify) {
-              this.$store.dispatch('notify', {notification: 'File saved !'})
+              this.$notify({type: 'success', title: 'File saved !', text: `${this.selectedFileDisplay} has correctly been saved`})
             }
           }, (err) => {
             if (notify) {
               logger.error(`Error saving file: ${FileHandler.selectedFile} ->\n${err}`)
-              this.$store.dispatch('notify', {notification: err})
             }
           })
       },
@@ -121,12 +118,12 @@
 
       executeGenerator() {
         if (FileHandler.selectedFile === null) {
-          alert('No definition file selected. Please load or create one.')
+          this.$notify({type: 'warning', title: 'No file selected !', text: 'No definition file selected. Please load or create one and try again'})
           return
         }
 
         if (!this.areSettingsValid) {
-          alert('Error found in settings: please visit the settings section to fix it')
+          this.$notify({type: 'warning', title: 'Invalid settings', text: 'Error found in settings: please visit the settings section to fix it'})
           // this.$router.push({name: 'settings'})  // TODO: not correctly working ... unable to find the source of the problem
           return
         }

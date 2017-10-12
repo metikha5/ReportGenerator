@@ -3,7 +3,7 @@ import path from 'path'
 import { mkdirSync, existsSync } from 'fs'
 
 let logger
-if (process.env.NODE_ENV !== 'development') {
+if (process.env.NODE_ENV === 'development') {
   logger = {
     info: console.log,
     error: console.error
@@ -18,7 +18,6 @@ if (process.env.NODE_ENV !== 'development') {
       mkdirSync(logsFolder)
     } catch (e) {
       logsFolder = __dirname
-      console.log(`Unable to create folder: ${logsFolder}`)
     }
   }
 
@@ -30,8 +29,8 @@ if (process.env.NODE_ENV !== 'development') {
     level: 'info',
     format: combine(timestamp(), myFormat),
     transports: [
-      new transports.File({ filename: path.join(logsFolder, '/error.log'), level: 'error', timestamp: true }),
-      new transports.File({ filename: path.join(logsFolder, '/info.log'), timestamp: true })
+      new transports.File({ filename: path.join(logsFolder, '/error.log'), level: 'error', timestamp: true, maxsize: 1000000, maxFiles: 10, tailable: true }),
+      new transports.File({ filename: path.join(logsFolder, '/info.log'), timestamp: true, maxsize: 1000000, maxFiles: 10, tailable: true })
     ]
   })
 

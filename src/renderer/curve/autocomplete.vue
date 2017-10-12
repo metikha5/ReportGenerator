@@ -17,7 +17,8 @@
         <li v-for="(suggestion, index) in matches"
             :key="index"
             v-bind:class="{'active': isActive(index)}"
-            @click="onClick(index)">
+            @click="onClick(index)"
+            @mouseover="overDropdown(index)" >
           <a href="#">{{ suggestion }}</a>
         </li>
       </ul>
@@ -215,6 +216,10 @@
 
       onClick(index) {
         this.complete(index)
+      },
+
+      overDropdown(index) {
+        this.current = index
       },
 
       left(event) {

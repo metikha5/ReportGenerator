@@ -36,7 +36,6 @@
 </script>
 
 <style>
-  @import '../../node_modules/bootstrap/dist/css/bootstrap.css';
   @import 'assets/custom-bootstrap/css/bootstrap.min.css';
   @import 'assets/main.css';
     /* Transition for the notifications */

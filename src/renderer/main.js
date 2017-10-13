@@ -5,7 +5,8 @@ import velocity from 'velocity-animate'
 
 import Tooltip from 'vue-directive-tooltip'
 import 'vue-directive-tooltip/css/index.css'
-require('vue2-animate/dist/vue2-animate.min.css')
+import 'bootstrap/dist/css/bootstrap.css'
+import 'vue2-animate/dist/vue2-animate.min.css'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 

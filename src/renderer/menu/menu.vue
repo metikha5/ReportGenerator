@@ -65,9 +65,7 @@
             this.$store.commit('createFromList', {rawPlots})
             this.$notify({type: 'success', title: 'File loaded !', text: `${path.basename(FileHandler.selectedFile)} has correctly been loaded`})
             this.updateDisplayedFile()
-          }, (e) => {
-            logger.error(`Error while loading file: ${FileHandler.selectedFile}\n${e}`)
-          })
+          }, () => {})
           .then(() => {
             this.$store.commit('resetPlotsModified')
           })
@@ -89,8 +87,6 @@
           this.$store.commit('reset')
           this.$store.commit('resetPlotsModified')
           EventBus.$emit('basicReset')
-        }, (err) => {
-          logger.error(`Error while creating new file: ${err}`)
         })
       },
 
@@ -103,7 +99,7 @@
               this.$notify({type: 'success', title: 'File saved !', text: `${this.selectedFileDisplay} has correctly been saved`})
             }
           }, (err) => {
-            if (notify) {
+            if (notify && FileHandler.selectedFile !== null) {
               logger.error(`Error saving file: ${FileHandler.selectedFile} ->\n${err}`)
             }
           })

@@ -25,7 +25,6 @@ export default {
   methods: {
     saveChanges() {
       this.$store.dispatch('saveSettings', {fields: this.fields})
-      this.$notify({type: 'success', title: 'Settings saved'})
     },
 
     fetchData() {

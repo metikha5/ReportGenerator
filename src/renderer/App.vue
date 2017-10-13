@@ -19,13 +19,15 @@
     },
     computed: mapGetters(['arePlotsModified']),
     mounted() {
-      window.onbeforeunload = (e) => {
-        if (this.arePlotsModified) {
-          var answer = confirm('Your current file has not been saved, do you really want to close the application ?')
-          e.returnValue = answer
+      if (process.env.NODE_ENV !== 'development') {
+        window.onbeforeunload = (e) => {
+          if (this.arePlotsModified) {
+            var answer = confirm('Your current file has not been saved, do you really want to close the application ?')
+            e.returnValue = answer
 
-          if (answer) {
-            require('electron').remote.getCurrentWindow().destroy()
+            if (answer) {
+              require('electron').remote.getCurrentWindow().destroy()
+            }
           }
         }
       }

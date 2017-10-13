@@ -21,8 +21,8 @@
         </ul>
         <div class="navbar-text white-divider" v-if="selectedFileDisplay !== ''">&nbsp;</div>
         <p class="navbar-text small selected-file" v-if="selectedFileDisplay !== ''">
-          <span v-if="arePlotsModified" @mouseover="overFilename = true" @mouseout="overFilename = false">
-            <b>{{ selectedFileDisplay }}</b> <span v-if="overFilename">(file not saved)</span>
+          <span v-if="arePlotsModified"  v-tooltip.bottom="'File not saved'">
+            <b>{{ selectedFileDisplay }}</b>
           </span>
           <span v-else>{{ selectedFileDisplay }}</span>
         </p>
@@ -44,8 +44,7 @@
     name: 'MenuView',
     data() {
       return {
-        selectedFileDisplay: '',
-        overFilename: false
+        selectedFileDisplay: ''
       }
     },
     computed: mapGetters(['plotsEmpty', 'arePlotsModified', 'plots', 'areSettingsValid']),

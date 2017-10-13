@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-default" id="menu">
+  <nav class="navbar navbar-default" id="menubar">
     <div class="container-fluid">
       <div class="navbar-header">
         <div>
@@ -135,6 +135,9 @@
 </script>
 
 <style>
+  #menubar {
+    height: 55px;
+  }
   .main-nav {
     margin-left: 20px;
   }
@@ -155,7 +158,7 @@
   .white-divider {
     border-left: solid 1px #c4c4c4;
     height: 30px;
-    margin-left: 0;
-    margin-right: -5px;
+    margin-left: 10px;
+    margin-right: -8px;
   }
 </style>

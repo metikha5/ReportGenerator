@@ -11,9 +11,11 @@
             </div>
 
             <div class="modal-body">
-                <div id="output-countainer">
-                  <div v-for="item in output" :key="item" :class="`output-${item.type}`">{{ item.message }}</div>
+              <div id="output-countainer">
+                <div v-for="item in output" :key="item.message" :class="`output-${item.type}`">
+                  {{ item.message }}
                 </div>
+              </div>
             </div>
           </div>
         </div>
@@ -45,6 +47,10 @@
     },
     methods: {
       openModal() {
+        if (this.childProccess !== null) {
+          return
+        }
+
         try {
           this.run()
           this.showModal = true
@@ -61,57 +67,22 @@
       run() {
         this.$notify({title: 'Generator started', text: 'Python generator execution started'})
         logger.info('Python generator execution started')
-        // TODO: detached mode ? https://trello.com/c/1TLsNd5K
-        this.childProccess = spawn(this.pythonPath, ['-u', this.generatorPath, FileHandler.selectedFile, this.databasePath])
+        this.childProccess = spawn(this.pythonPath, ['-u', this.generatorPath, FileHandler.selectedFile, this.databasePath], {detached: true})
         this.childProccess.stdout.setEncoding('utf8')
-
-        const scrollDown = () => {
-          const el = document.getElementById('output-countainer')
-          el.scrollTop = el.scrollHeight
-        }
 
         this.output.push({
           type: 'info',
           message: `Execute: ${this.pythonPath} ${this.generatorPath} ${FileHandler.selectedFile} ${this.databasePath}`
         })
 
-        this.childProccess.stdout.on('data', (data) => {
-          this.output.push({type: 'out', message: data})
-          scrollDown()
-        })
+        this.childProccess.stdout.on('data', (data) => { this.displayChildMessage('out', data) })
 
-        this.childProccess.stderr.on('data', (data) => {
-          // TODO log message function https://trello.com/c/X92QXXQ0
-          let message
-          if (typeof data === 'object') {
-            message = new TextDecoder('utf-8').decode(data)
-          } else {
-            message = data
-          }
-          logger.error(`Failure during python script execution:\n${message}`)
-
-          if (message.indexOf('\n') !== -1) {
-            const splt = message.split('\n')
-            for (const chunk of splt) {
-              this.output.push({type: 'err', message: chunk})
-            }
-          } else {
-            this.output.push({type: 'err', message: message})
-          }
-
-          scrollDown()
-        })
+        this.childProccess.stderr.on('data', (data) => { this.displayChildMessage('err', data) })
 
         this.childProccess.on('close', (code) => {
-          let message
-          if (code === null) {
-            message = 'Proccess stopped'
-          } else {
-            message = `Process exited with code ${code}`
-          }
-          this.output.push({type: 'info', message: message})
-          scrollDown()
-          logger.info('Script execution stopped')
+          let message = code === null ? 'Proccess stopped' : `Process exited with code ${code}`
+          this.displayChildMessage('info', message)
+          logger.info(`Script execution stopped: ${message}`)
         })
       },
 
@@ -120,6 +91,24 @@
           this.childProccess.kill()
           this.childProccess = null
         }
+      },
+
+      displayChildMessage(type, data) {
+        let message = typeof data === 'object' ? new TextDecoder('utf-8').decode(data) : data
+        if (type === 'err') {
+          logger.error(`Failure during python script execution: ${message}`)
+        }
+
+        if (message.indexOf('\n') !== -1) {
+          const splt = message.split('\n')
+          for (const chunk of splt) {
+            this.output.push({type, message: chunk})
+          }
+        } else {
+          this.output.push({type, message})
+        }
+        const el = document.getElementById('output-countainer')
+        el.scrollTop = el.scrollHeight
       }
     }
   }
@@ -176,7 +165,7 @@
 
   #output-countainer {
     overflow-y: auto;
-    height: 180px;
+    height: 250px;
   }
 
   .output-err {

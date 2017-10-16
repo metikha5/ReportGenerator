@@ -21,7 +21,8 @@
         </ul>
         <div class="navbar-text white-divider" v-if="selectedFileDisplay !== ''">&nbsp;</div>
         <p class="navbar-text small selected-file" v-if="selectedFileDisplay !== ''">
-          <span v-if="arePlotsModified"  v-tooltip.bottom="'File not saved'">
+          <!-- <span v-if="arePlotsModified" v-tooltip.bottom="'File not saved'"> -->
+          <span v-if="arePlotsModified">
             <b>{{ selectedFileDisplay }}</b>
           </span>
           <span v-else>{{ selectedFileDisplay }}</span>

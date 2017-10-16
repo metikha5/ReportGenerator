@@ -12,8 +12,8 @@
 
             <div class="modal-body">
               <div id="output-countainer">
-                <div v-for="item in output" :key="item.message" :class="`output-${item.type}`">
-                  {{ item.message }}
+                <div v-for="(item, index) in output" :key="index">
+                  <span :class="[`output-${item.type}`, {'old-message': index <= oldLimit}]">{{ item.message }}</span>
                 </div>
               </div>
             </div>
@@ -38,7 +38,8 @@
       return {
         childProccess: null,
         showModal: false,
-        output: []
+        output: [],
+        oldLimit: -1
       }
     },
     computed: mapGetters(['pythonPath', 'generatorPath', 'databasePath']),
@@ -62,6 +63,7 @@
       closeModal() {
         this.stop()
         this.showModal = false
+        this.oldLimit = this.output.length - 1
       },
 
       run() {
@@ -173,5 +175,9 @@
   }
   .output-info {
     color: #3d76f5
+  }
+
+  .old-message {
+    color: rgb(178, 178, 178);
   }
 </style>

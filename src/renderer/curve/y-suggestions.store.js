@@ -50,7 +50,7 @@ export default {
   },
 
   mutations: {
-    resetState: (state) => {
+    resetSuggestions: (state) => {
       state.firstPart = ['tanks', 'actuators', 'providers']
       state.secondPart = {tanks: [], actuators: [], providers: []}
       state.partsLinks = {}
@@ -73,11 +73,11 @@ export default {
   },
 
   actions: {
-    init: ({ commit }, { databasePath }) => {
+    initSuggestions: ({ commit }, { databasePath }) => {
       // Init database
       databaseHelper.initDatabase(databasePath)
 
-      commit('resetState')
+      commit('resetSuggestions')
 
       databaseHelper.getTablesColumns().then(data => { commit('initFirstPart', {data}) })
       databaseHelper.getElementsNames().then(data => { commit('initSecondPart', {data}) })

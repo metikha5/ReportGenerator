@@ -1,7 +1,7 @@
 import sqlite from 'sqlite-sync'
 
 export default {
-  init_database(databasePath) {
+  initDatabase(databasePath) {
     sqlite.connect(databasePath)
   },
 
@@ -12,8 +12,9 @@ export default {
           reject(new Error(res.error))
         } else {
           resolve({
-            target: table.split('snapshotmodel')[0],
+            target: `${table.split('snapshotmodel')[0]}s`,
             elements: res.map(c => c.name)
+              .filter(c => c !== 'id' && c !== 'date' && !c.endsWith('_id'))
           })
         }
       })
@@ -32,7 +33,7 @@ export default {
           reject(new Error(res.error))
         } else {
           resolve({
-            target: 'tank',
+            target: 'tanks',
             elements: res.map(c => c.name)
           })
         }
@@ -47,7 +48,7 @@ export default {
           reject(new Error(res.error))
         } else {
           resolve({
-            target: 'actuator',
+            target: 'actuators',
             elements: res.map(c => `${c.src}->${c.sink}`)
           })
         }
@@ -62,7 +63,7 @@ export default {
           reject(new Error(res.error))
         } else {
           resolve({
-            target: 'provider',
+            target: 'providers',
             elements: res.map(c => c.name)
           })
         }

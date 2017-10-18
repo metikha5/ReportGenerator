@@ -68,6 +68,7 @@
     },
     mounted() {
       EventBus.$on('basicReset', this.basicReset)
+      this.$store.dispatch('init', {databasePath: this.$store.getters.databasePath})  // TODO: to remove
     },
     methods: {
       ...Vuex.mapMutations(['addPlot', 'plotsModified']),

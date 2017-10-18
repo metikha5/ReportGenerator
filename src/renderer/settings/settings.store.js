@@ -5,6 +5,7 @@
 import ElectronStorage from 'electron-store'
 import { existsSync } from 'fs'
 import logger from '../logging'
+// import { initDatabase } from './database-helper'
 const storage = new ElectronStorage()
 
 export default {

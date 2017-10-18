@@ -28,7 +28,8 @@
 </template>
 
 <script>
-  import Suggestions from './suggestions'
+  import { mapGetters } from 'vuex'
+
   export default {
     name: 'Autocomplete',
     props: {
@@ -43,7 +44,7 @@
         current: 0,
         matches: [],
         context: null,
-        cursorPosition: 0,  // TODO: update cursor position when the user click in the input
+        cursorPosition: 0,
         dropdown: {
           firstVisible: 0,
           lastVisible: 0,
@@ -57,6 +58,7 @@
       this.dropdown.target = document.getElementById('suggestions')
     },
     computed: {
+      ...mapGetters(['getSuggestions']),
       openSuggestion() {
         // Having several variables is necessay to have the computed value working correctly
         // https://github.com/vuejs/vue/issues/370
@@ -74,7 +76,7 @@
     methods: {
       updateMatches() {
         this.defineContext()
-        let suggestions = Suggestions.getSuggestion(this.context)
+        let suggestions = this.getSuggestions(this.context)
 
         // Set suggestions in dropdown
         if (this.context === null) {

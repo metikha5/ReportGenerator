@@ -41,7 +41,6 @@ export default {
       return true
     },
     isDatabaseValid: (state) => (database = state.databasePath) => {
-      console.log(database)
       if (!existsSync(database)) {
         return false
       }
@@ -54,7 +53,7 @@ export default {
           isSqlite = true
         }
       }, err => {
-        console.log(err)
+        logger.error(err)
         isSqlite = false
       })
       return isSqlite
@@ -75,7 +74,6 @@ export default {
       state.generatorPath = payload.value
     },
     databasePathUpdate: (state, payload) => {
-      console.log(this)
       storage.set('databasePath', payload.value)
       state.databasePath = payload.value
     }

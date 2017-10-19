@@ -58,13 +58,13 @@ export default {
 
   _getProviders() {
     return new Promise((resolve, reject) => {
-      sqlite.run('SELECT name FROM providermodel;', function(res) {
+      sqlite.run('SELECT reservoir_name FROM providermodel;', function(res) {
         if (res.error) {
           reject(new Error(res.error))
         } else {
           resolve({
             target: 'providers',
-            elements: res.map(c => c.name)
+            elements: res.map(c => c.reservoir_name)
           })
         }
       })
@@ -74,8 +74,8 @@ export default {
   getElementsNames() {
     return Promise.all([
       this._getTanks(),
-      this._getActuators()
-      // this._getProviders()
+      this._getActuators(),
+      this._getProviders()
     ])
   }
 }

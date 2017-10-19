@@ -64,7 +64,7 @@
             EventBus.$emit('basicReset')
 
             this.$store.commit('createFromList', {rawPlots})
-            this.$notify({type: 'success', title: 'File loaded !', text: `${path.basename(FileHandler.selectedFile)} has correctly been loaded`})
+            this.$notify({group: 'default', type: 'success', title: 'File loaded !', text: `${path.basename(FileHandler.selectedFile)} has correctly been loaded`})
             this.updateDisplayedFile()
           }, () => {})
           .then(() => {
@@ -97,7 +97,7 @@
           .then(() => {
             this.$store.commit('resetPlotsModified')
             if (notify) {
-              this.$notify({type: 'success', title: 'File saved !', text: `${this.selectedFileDisplay} has correctly been saved`})
+              this.$notify({group: 'default', type: 'success', title: 'File saved !', text: `${this.selectedFileDisplay} has correctly been saved`})
             }
           }, (err) => {
             if (notify && FileHandler.selectedFile !== null) {
@@ -112,12 +112,12 @@
 
       executeGenerator() {
         if (FileHandler.selectedFile === null) {
-          this.$notify({type: 'error', title: 'No file selected !', text: 'No definition file selected. Please load or create one and try again'})
+          this.$notify({group: 'default', type: 'error', title: 'No file selected !', text: 'No definition file selected. Please load or create one and try again'})
           return
         }
 
         if (!this.areSettingsValid) {
-          this.$notify({type: 'error', title: 'Invalid settings', text: 'Error found in settings: please visit the settings section to fix it'})
+          this.$notify({group: 'default', type: 'error', title: 'Invalid settings', text: 'Error found in settings: please visit the settings section to fix it'})
           // this.$router.push({name: 'settings'})  // TODO: not correctly working ... unable to find the source of the problem
           return
         }

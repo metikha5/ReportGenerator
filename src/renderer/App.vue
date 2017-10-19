@@ -4,16 +4,19 @@
     <transition name="mfade" mode="out-in">
       <router-view></router-view>
     </transition>
-    <notifications animation-type="velocity" :max="4" style="cursor: pointer" />
+    <notifications animation-type="velocity" :max="4" :group= "'default'" style="cursor: pointer" />
+    <notifications animation-type="velocity" :max="1" :group="'invalidDatabase'" :position="'bottom right'" />
   </div>
 </template>
 
 <script>
   import MenuView from './menu/menu'
   import { mapGetters } from 'vuex'
+  import { globalNotifications } from './mixins'
 
   export default {
     name: 'report-generator',
+    mixins: [globalNotifications],
     components: {
       MenuView
     },
@@ -32,19 +35,12 @@
           }
         }
       }
-
+      console.log(this.isDatabaseValid())
       // Init database
-      if (this.isDatabaseValid) {
+      if (this.isDatabaseValid()) {
         this.$store.dispatch('initSuggestions', {databasePath: this.databasePath})
       } else {
-        this.$notify({
-          type: 'warn',
-          duration: 60000,
-          title: 'Oh no...',
-          text: `No valid database set, we will not be able to help you building your report !
-          <br/>
-          <a href="#/settings">Select a database now</a>`
-        })
+        this.notifyInvalidDatabase()
       }
     }
   }

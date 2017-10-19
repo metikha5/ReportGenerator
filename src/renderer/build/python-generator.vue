@@ -67,7 +67,7 @@
       },
 
       run() {
-        this.$notify({title: 'Generator started', text: 'Python generator execution started'})
+        this.$notify({group: 'default', title: 'Generator started', text: 'Python generator execution started'})
         logger.info('Python generator execution started')
         this.childProccess = spawn(this.pythonPath, ['-u', this.generatorPath, FileHandler.selectedFile, this.databasePath], {detached: true})
         this.childProccess.stdout.setEncoding('utf8')

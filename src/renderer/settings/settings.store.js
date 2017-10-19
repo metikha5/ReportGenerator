@@ -40,12 +40,13 @@ export default {
       }
       return true
     },
-    isDatabaseValid(state) {
-      if (!existsSync(state.databasePath)) {
+    isDatabaseValid: (state) => (database = state.databasePath) => {
+      console.log(database)
+      if (!existsSync(database)) {
         return false
       }
 
-      sqlite.connect(state.databasePath)
+      sqlite.connect(database)
       // this is not async
       let isSqlite = false
       sqlite.run('PRAGMA schema_version;', res => {
@@ -74,6 +75,7 @@ export default {
       state.generatorPath = payload.value
     },
     databasePathUpdate: (state, payload) => {
+      console.log(this)
       storage.set('databasePath', payload.value)
       state.databasePath = payload.value
     }

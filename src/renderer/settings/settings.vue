@@ -9,12 +9,12 @@
 </template>
 
 <script>
-/* global _ */
-import { existsSync } from 'fs'
+import { mapGetters } from 'vuex'
 import SelectPath from '../global/select-path.vue'
 
 export default {
   name: 'SettingsView',
+  computed: mapGetters(['isDatabaseValid', 'databasePath']),
   data() {
     return {
       fields: [
@@ -28,9 +28,8 @@ export default {
     saveChanges() {
       this.$store.dispatch('saveSettings', {fields: this.fields})
 
-      const databasePath = _.find(this.fields, {'name': 'databasePath'}).value
-      if (databasePath !== null && existsSync(databasePath)) {
-        this.$store.dispatch('initSuggestions', {databasePath})
+      if (this.isDatabaseValid) {
+        this.$store.dispatch('initSuggestions', {databasePath: this.databasePath})
       } else {
         this.$store.commit('resetSuggestions')
       }

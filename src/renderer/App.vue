@@ -11,14 +11,13 @@
 <script>
   import MenuView from './menu/menu'
   import { mapGetters } from 'vuex'
-  import { existsSync } from 'fs'
 
   export default {
     name: 'report-generator',
     components: {
       MenuView
     },
-    computed: mapGetters(['arePlotsModified', 'databasePath']),
+    computed: mapGetters(['arePlotsModified', 'databasePath', 'isDatabaseValid']),
     mounted() {
       // Prevent to quit if current sheet is not saved
       if (process.env.NODE_ENV !== 'development') {
@@ -35,7 +34,7 @@
       }
 
       // Init database
-      if (existsSync(this.databasePath)) {
+      if (this.isDatabaseValid) {
         this.$store.dispatch('initSuggestions', {databasePath: this.databasePath})
       } else {
         this.$notify({

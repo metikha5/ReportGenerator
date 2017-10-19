@@ -41,7 +41,7 @@ export default {
         if (target !== null) {
           return state.secondPart[target]
         } else {
-          return Object.values(state.secondPart).reduce((a, b) => a.concat(b))
+          return Array.from(new Set(Object.values(state.secondPart).reduce((a, b) => a.concat(b))))
         }
       }
 

@@ -3,6 +3,7 @@ import databaseHelper from './database-helper'
 
 export default {
   state: {
+    initDone: false,
     beginning: ['eval: '],
     firstPart: ['tanks', 'actuators', 'providers'],
     secondPart: {},
@@ -50,10 +51,13 @@ export default {
   },
 
   mutations: {
+    initDone: state => { state.initDone = true },
+
     resetSuggestions: (state) => {
       state.firstPart = ['tanks', 'actuators', 'providers']
       state.secondPart = {tanks: [], actuators: [], providers: []}
       state.partsLinks = {}
+      state.initDone = false
     },
 
     initFirstPart: (state, {data}) => {
@@ -81,6 +85,8 @@ export default {
 
       databaseHelper.getTablesColumns().then(data => { commit('initFirstPart', {data}) })
       databaseHelper.getElementsNames().then(data => { commit('initSecondPart', {data}) })
+
+      commit('initDone')
     }
   }
 }

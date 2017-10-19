@@ -5,6 +5,7 @@
 import ElectronStorage from 'electron-store'
 import { existsSync } from 'fs'
 import logger from '../logging'
+import sqlite from 'sqlite-sync'
 // import { initDatabase } from './database-helper'
 const storage = new ElectronStorage()
 
@@ -38,6 +39,24 @@ export default {
         }
       }
       return true
+    },
+    isDatabaseValid(state) {
+      if (!existsSync(state.databasePath)) {
+        return false
+      }
+
+      sqlite.connect(state.databasePath)
+      // this is not async
+      let isSqlite = false
+      sqlite.run('PRAGMA schema_version;', res => {
+        if (res[0] !== undefined && res[0].schema_version !== 0) {
+          isSqlite = true
+        }
+      }, err => {
+        console.log(err)
+        isSqlite = false
+      })
+      return isSqlite
     }
   },
   mutations: {

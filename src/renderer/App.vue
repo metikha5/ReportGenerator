@@ -5,7 +5,7 @@
       <router-view></router-view>
     </transition>
     <notifications animation-type="velocity" :max="4" :group= "'default'" style="cursor: pointer" />
-    <notifications animation-type="velocity" :max="1" :group="'invalidDatabase'" :position="'bottom right'" />
+    <notifications animation-type="velocity" :position="'bottom right'" :max="1" :group="'invalidDatabase'" />
   </div>
 </template>
 

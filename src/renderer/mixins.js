@@ -1,6 +1,7 @@
 const globalNotifications = {
   methods: {
     notifyInvalidDatabase() {
+      this.$notify({group: 'invalidDatabase', clean: true})
       this.$notify({
         group: 'invalidDatabase',
         type: 'warn',

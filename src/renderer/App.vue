@@ -4,8 +4,10 @@
     <transition name="mfade" mode="out-in">
       <router-view></router-view>
     </transition>
-    <notifications animation-type="velocity" :max="4" :group= "'default'" style="cursor: pointer" />
-    <notifications animation-type="velocity" :position="'bottom right'" :max="1" :group="'invalidDatabase'" />
+    <notifications :animation-type="'velocity'" :max="4" :group= "'default'" style="cursor: pointer" />
+    <database-notification :animation-type="'velocity'" :position="'bottom right'" :max="1" :group="'invalidDatabase'">
+      <router-link slot="link" :to="{name: 'settings'}">Select a database now</router-link>
+    </database-notification>
   </div>
 </template>
 
@@ -13,12 +15,14 @@
   import MenuView from './menu/menu'
   import { mapGetters } from 'vuex'
   import { globalNotifications } from './mixins'
+  import databaseNotification from './db-notification'
 
   export default {
     name: 'report-generator',
     mixins: [globalNotifications],
     components: {
-      MenuView
+      MenuView,
+      databaseNotification
     },
     computed: mapGetters(['arePlotsModified', 'databasePath', 'isDatabaseValid']),
     mounted() {

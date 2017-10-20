@@ -39,7 +39,6 @@
           }
         }
       }
-      console.log(this.isDatabaseValid())
       // Init database
       if (this.isDatabaseValid()) {
         this.$store.dispatch('initSuggestions', {databasePath: this.databasePath})

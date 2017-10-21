@@ -8,6 +8,7 @@ const template = [
     label: 'File',
     submenu: [{
       label: 'New',
+      accelerator: process.platform === 'darwin' ? 'Command+N' : 'Ctrl+N',
       click(item, focus) {
         var focusedWindow = BrowserWindow.getFocusedWindow()
         focusedWindow.webContents.send('new')
@@ -15,6 +16,7 @@ const template = [
     },
     {
       label: 'Load',
+      accelerator: process.platform === 'darwin' ? 'Command+O' : 'Ctrl+O',
       click(item, focus) {
         var focusedWindow = BrowserWindow.getFocusedWindow()
         focusedWindow.webContents.send('load')
@@ -22,6 +24,7 @@ const template = [
     },
     {
       label: 'Save',
+      accelerator: process.platform === 'darwin' ? 'Command+S' : 'Ctrl+S',
       click(item, focus) {
         var focusedWindow = BrowserWindow.getFocusedWindow()
         focusedWindow.webContents.send('save')
@@ -29,6 +32,7 @@ const template = [
     },
     {
       label: 'Run',
+      accelerator: process.platform === 'darwin' ? 'Command+R' : 'Ctrl+R',
       click(item, focus) {
         var focusedWindow = BrowserWindow.getFocusedWindow()
         focusedWindow.webContents.send('run')

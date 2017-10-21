@@ -48,6 +48,13 @@
         selectedFileDisplay: ''
       }
     },
+    mounted() {
+      // Link electron menu to process actions
+      this.$electron.ipcRenderer.on('new', this.newDefinition)
+      this.$electron.ipcRenderer.on('load', this.loadFile)
+      this.$electron.ipcRenderer.on('save', this.saveFile)
+      this.$electron.ipcRenderer.on('run', this.executeGenerator)
+    },
     computed: mapGetters(['plotsEmpty', 'arePlotsModified', 'plots', 'areSettingsValid']),
     methods: {
       loadFile() {

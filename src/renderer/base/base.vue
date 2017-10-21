@@ -67,6 +67,9 @@
       }
     },
     mounted() {
+      this.$electron.ipcRenderer.on('file-save', function() {
+        console.log('save file!!!')
+      })
       EventBus.$on('basicReset', this.basicReset)
     },
     methods: {

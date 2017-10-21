@@ -10,7 +10,7 @@
              :class="{'active': selectedPlot === plot}"
              :key="plot.id"
              @click.prevent="selectPlot(plot)">
-            {{ plot.title }}
+            {{ plot.title || 'Unnamed plot' }}
           </a>
         </div>
       </div>

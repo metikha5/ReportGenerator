@@ -10,7 +10,7 @@
          :key="curve.id"
          :class="{'active': plot.selectedCurve == curve}"
          @click="selectCurve(curve)">
-        {{ curve.title }}
+        {{ curve.title || 'Unnamed curve'  }}
       </a>
     </div>
     <div style="margin-top: 30px;">

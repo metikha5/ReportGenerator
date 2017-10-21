@@ -8,11 +8,11 @@
 
 <script>
 import { existsSync } from 'fs'
+import { dirname } from 'path'
 import { remote } from 'electron'
 
 export default {
   name: 'SelectPath',
-//  props: ['value', 'label'],
   props: {
     value: String,
     label: String,
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     selectFile() {
-      remote.dialog.showOpenDialog((fileNames) => {
+      remote.dialog.showOpenDialog({defaultPath: dirname(this.path)}, (fileNames) => {
         if (fileNames !== undefined) {
           this.path = fileNames[0]
         }

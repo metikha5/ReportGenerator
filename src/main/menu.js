@@ -1,5 +1,4 @@
-// import EventBus from '../renderer/global/event-bus'
-const { Menu, BrowserWindow } = require('electron')
+const { Menu, BrowserWindow, shell } = require('electron')
 const electron = require('electron')
 const app = electron.app
 
@@ -13,6 +12,9 @@ const template = [
         var focusedWindow = BrowserWindow.getFocusedWindow()
         focusedWindow.webContents.send('new')
       }
+    },
+    {
+      type: 'separator'
     },
     {
       label: 'Load',
@@ -29,6 +31,9 @@ const template = [
         var focusedWindow = BrowserWindow.getFocusedWindow()
         focusedWindow.webContents.send('save')
       }
+    },
+    {
+      type: 'separator'
     },
     {
       label: 'Run',
@@ -82,21 +87,6 @@ const template = [
         }
       },
       {
-        type: 'separator'
-      },
-      {
-        role: 'resetzoom'
-      },
-      {
-        role: 'zoomin'
-      },
-      {
-        role: 'zoomout'
-      },
-      {
-        type: 'separator'
-      },
-      {
         role: 'togglefullscreen'
       }
     ]
@@ -118,7 +108,7 @@ const template = [
       {
         label: 'Learn More',
         click() {
-          console.log('Hello you')
+          shell.openExternal('https://github.com/metikha5/ReportGenerator/blob/master/README.md')
         }
       }
     ]

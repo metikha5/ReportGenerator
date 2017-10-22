@@ -5,7 +5,7 @@
       <div id="base" class="col-xs-3">
         <button class="btn btn-default btn-xs center-block" @click="addPlot">Add plot</button>
         <div class="list-group element-list">
-          <a href="#" class="list-group-item borderless"
+          <a :href="'#plot' + plot.id" class="list-group-item borderless"
              v-for="plot in plots"
              :class="{'active': selectedPlot === plot}"
              :key="plot.id"
@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div id="plotDetail" class="col-xs-3" v-if="displayPlotBlock">
+      <div id="plotDetail" class="col-xs-3 test" v-if="displayPlotBlock">
         <plot-view v-model="selectedPlot"></plot-view>
       </div>
 
@@ -68,6 +68,11 @@
     },
     mounted() {
       EventBus.$on('basicReset', this.basicReset)
+
+      // Handle electron context menu actions
+      this.$electron.ipcRenderer.on('removePlot', (e, plotId) => {
+        this.$store.commit('removePlot', {plotId: this.plot.id})
+      })
     },
     methods: {
       ...Vuex.mapMutations(['addPlot', 'plotsModified']),

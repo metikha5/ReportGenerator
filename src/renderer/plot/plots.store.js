@@ -38,15 +38,15 @@ export default {
     },
 
     removePlot(state, payload) {
-      const plotIndex = state.plots.findIndex(o => payload.plot.id === o.id)
+      const plotIndex = state.plots.findIndex(o => payload.plotId === o.id)
       if (plotIndex !== -1) {
         state.plots.splice(plotIndex, 1)
+        EventBus.$emit('basicReset')
       }
-      EventBus.$emit('basicReset')
     },
 
     removeCurve(state, payload) {
-      const curveIndex = payload.plot.curves.findIndex(c => payload.curve.id === c.id)
+      const curveIndex = payload.plot.curves.findIndex(c => payload.curveId === c.id)
       if (curveIndex !== -1) {
         payload.plot.curves.splice(curveIndex, 1)
       }

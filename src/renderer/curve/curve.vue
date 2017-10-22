@@ -72,7 +72,7 @@
     },
     methods: {
       removeCurve() {
-        this.$store.commit('removeCurve', {curve: this.curve, plot: this.plot})
+        this.$store.commit('removeCurve', {curveId: this.curve.id, plot: this.plot})
       },
       updateField(field, value) {
         this.$store.commit('updateCurve', {plot: this.plot, curve: this.curve, field, value})

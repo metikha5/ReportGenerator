@@ -5,7 +5,7 @@
       <button class="btn btn-danger btn-xs" @click="removePlot" style="margin-left: 5px">Remove plot</button>
     </div>
     <div class="list-group element-list">
-      <a href="#" class="list-group-item borderless"
+      <a :href="'#curve' + curve.id" class="list-group-item borderless"
          v-for="curve in plot.curves"
          :key="curve.id"
          :class="{'active': plot.selectedCurve == curve}"
@@ -107,6 +107,11 @@
           'right', 'center left', 'center right', 'lower center', 'upper center', 'center']
       }
     },
+    mounted() {
+      this.$electron.ipcRenderer.on('removeCurve', (e, curveId) => {
+        this.$store.commit('removeCurve', {plot: this.plot, curveId})
+      })
+    },
     computed: {
       plot() { return this.value }
     },
@@ -125,7 +130,7 @@
       },
 
       removePlot() {
-        this.$store.commit('removePlot', {plot: this.plot})
+        this.$store.commit('removePlot', {plotId: this.plot.id})
       },
 
       updateField(field, value) {

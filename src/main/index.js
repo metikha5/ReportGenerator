@@ -33,6 +33,32 @@ function createWindow() {
   require('./menu')
 }
 
+require('electron-context-menu')({
+  prepend: (params, browserWindow) => {
+    return [{
+      label: 'Remove plot',
+      visible: params.linkURL.includes('#plot'),
+      click() {
+        const re = /.*#plot(\d+)/g
+        let res = re.exec(params.linkURL)
+        if (res !== null) {
+          browserWindow.webContents.send('removePlot', parseInt(res[1]))
+        }
+      }
+    }, {
+      label: 'Remove curve',
+      visible: params.linkURL.includes('#curve'),
+      click() {
+        const re = /.*#curve(\d+)/g
+        let res = re.exec(params.linkURL)
+        if (res !== null) {
+          browserWindow.webContents.send('removeCurve', parseInt(res[1]))
+        }
+      }
+    }]
+  }
+})
+
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {

@@ -9,7 +9,7 @@
          v-for="curve in plot.curves"
          :key="curve.id"
          :class="{'active': plot.selectedCurve == curve}"
-         @click="selectCurve(curve)">
+         @click.prevent="selectCurve(curve)">
         {{ curve.title || 'Unnamed curve'  }}
       </a>
     </div>
@@ -29,28 +29,28 @@
           <datepicker
             :class="{'empty-datefield': plot.dateBegin === null}"
             :bootstrapStyling="true"
-            :format="'dd/MM/yyyy'" 
+            :format="'dd/MM/yyyy'"
             :clear-button="true"
             :clear-button-icon="'glyphicon'"
             :placeholder="'From'"
             :monday-first="true"
-            name="dateBegin" 
+            name="dateBegin"
             id="dateBegin"
             :value="plot.dateBegin"
             v-on:selected="updateDateField('dateBegin', $event)">
           </datepicker>
           <div class="spacer"></div>
-          <datepicker 
+          <datepicker
             :class="{'empty-datefield': plot.dateEnd === null}"
-            :bootstrapStyling="true" 
+            :bootstrapStyling="true"
             :format="'dd/MM/yyyy'"
             :clear-button="true"
             :clear-button-icon="'glyphicon'"
             :placeholder="'To'"
             :monday-first="true"
-            name="dateEnd" 
-            id="dateEnd" 
-            :value="plot.dateEnd" 
+            name="dateEnd"
+            id="dateEnd"
+            :value="plot.dateEnd"
             v-on:selected="updateDateField('dateEnd', $event)">
           </datepicker>
         </div>

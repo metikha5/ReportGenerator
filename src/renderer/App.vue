@@ -15,7 +15,7 @@
   import MenuView from './menu/menu'
   import { mapGetters } from 'vuex'
   import { globalNotifications } from './mixins'
-  import databaseNotification from './db-notification'
+  import databaseNotification from './global/db-notification'
 
   export default {
     name: 'report-generator',

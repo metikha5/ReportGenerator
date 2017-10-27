@@ -1,13 +1,15 @@
 <template>
   <div id="app">
     <menu-view></menu-view>
-    <transition name="mfade" mode="out-in">
-      <router-view></router-view>
-    </transition>
-    <notifications :animation-type="'velocity'" :max="4" :group= "'default'" style="cursor: pointer" />
-    <database-notification :animation-type="'velocity'" :position="'bottom right'" :max="1" :group="'invalidDatabase'">
-      <router-link slot="link" :to="{name: 'settings'}">Select a database now</router-link>
-    </database-notification>
+    <div class="content">
+      <transition name="mfade" mode="out-in">
+        <router-view></router-view>
+      </transition>
+      <notifications :animation-type="'velocity'" :max="4" :group= "'default'" style="cursor: pointer" />
+      <database-notification :animation-type="'velocity'" :position="'bottom right'" :max="1" :group="'invalidDatabase'">
+        <router-link slot="link" :to="{name: 'settings'}">Select a database now</router-link>
+      </database-notification>
+    </div>
   </div>
 </template>
 
@@ -59,7 +61,10 @@
   .mfade-enter, .mfade-leave-to {
     opacity: 0;
   }
-  .btn-xs {
-    font-size: 0.8em;
+  .content .btn-xs {
+    font-size: 0.9em;
+  }
+  .content {
+    font-size: 0.9em;
   }
 </style>

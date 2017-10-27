@@ -142,7 +142,7 @@
   #menubar { font-size: 0.8em }
   #menubar .navbar-brand { font-size: 1.2em }
   #menubar > div > div.collapse.navbar-collapse > ul > li > a:hover {
-    max-height: 48px;
+    height: 53px;
   }
 
   .main-nav { margin-left: 20px }

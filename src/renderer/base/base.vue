@@ -71,7 +71,7 @@
 
       // Handle electron context menu actions
       this.$electron.ipcRenderer.on('removePlot', (e, plotId) => {
-        this.$store.commit('removePlot', {plotId: this.plot.id})
+        this.$store.commit('removePlot', {plotId})
       })
     },
     methods: {

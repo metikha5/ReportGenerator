@@ -139,25 +139,16 @@
 </script>
 
 <style>
-  #menubar {
-    height: 55px;
-  }
-  .main-nav {
-    margin-left: 20px;
-  }
-
-  .icon {
-    margin-right: 8px;
+  #menubar { font-size: 0.8em }
+  #menubar .navbar-brand { font-size: 1.2em }
+  #menubar > div > div.collapse.navbar-collapse > ul > li > a:hover {
+    max-height: 48px;
   }
 
-  .icon-shift {
-    margin-right: 5px;
-    margin-top: 5px;
-  }
-
-  .selected-file {
-    margin-top: 22px;
-  }
+  .main-nav { margin-left: 20px }
+  .icon { margin-right: 8px }
+  .icon-shift { margin-right: 5px; margin-top: 5px; }
+  .selected-file { margin-top: 22px }
 
   .white-divider {
     border-left: solid 1px #c4c4c4;

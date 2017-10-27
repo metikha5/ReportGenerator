@@ -59,4 +59,7 @@
   .mfade-enter, .mfade-leave-to {
     opacity: 0;
   }
+  .btn-xs {
+    font-size: 0.8em;
+  }
 </style>

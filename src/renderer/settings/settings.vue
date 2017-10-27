@@ -22,7 +22,7 @@ export default {
       fields: [
         {name: 'pythonPath', label: 'Python', value: null},
         {name: 'generatorPath', label: 'Generator', value: null},
-        {name: 'databasePath', label: 'Default database', value: null, kind: 'database'}  // TODO: Check if kind need to be added to all the elements
+        {name: 'databasePath', label: 'Default database', value: null, kind: 'database'}
       ]
     }
   },

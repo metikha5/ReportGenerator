@@ -13,7 +13,7 @@ export default {
   getters: {
     getFirstPartTarget: state => firstPart => {
       for (const key of Object.keys(state.partsLinks)) {
-        if (_.includes(state.partsLinks[key], firstPart)) {
+        if (_.includes(state.partsLinks[key], firstPart.trim())) {
           return key
         }
       }

@@ -109,7 +109,7 @@
         }
 
         // Find beginning of the word
-        for (let i = this.cursorPosition; i > 0; i--) {
+        for (let i = this.cursorPosition; i >= 0; i--) {
           if (this.content[i] === ' ') {
             context.start = i + 1
             break

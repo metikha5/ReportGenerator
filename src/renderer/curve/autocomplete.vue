@@ -1,8 +1,8 @@
 <template>
   <div>
     <!--<textarea class="form-control" v-model="content" rows="15" cols="50" @input="change"></textarea>-->
-    <div style="position:relative" v-bind:class="{'open': openSuggestion}">
-      <input class="form-control" type="text" v-model="content"
+    <div style="position:relative" v-bind:class="{'open': openSuggestion}" v-click-outside="escape">
+      <input class="form-control" type="text" id="mainInput" v-model="content"
              @keydown.enter="enter"
              @keydown.left="left"
              @keydown.right="right"
@@ -10,8 +10,7 @@
              @keydown.up.prevent="up"
              @keydown.esc="escape"
              @click="jump"
-             @input="onChange"
-             @blur="escape"/>
+             @input="onChange"/>
 
       <ul id="suggestions" class="dropdown-menu" style="width:100%">
         <li v-for="(suggestion, index) in matches"
@@ -29,9 +28,11 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import { ClickOutside } from '../directives'
 
   export default {
     name: 'Autocomplete',
+    directives: { ClickOutside },
     props: {
       val: {
         type: String,
@@ -219,6 +220,7 @@
 
       onClick(index) {
         this.complete(index)
+        document.getElementById('mainInput').focus()
       },
 
       overDropdown(index) {

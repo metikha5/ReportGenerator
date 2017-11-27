@@ -68,9 +68,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="groupInput" class="col-sm-3 control-label">Group</label>
+        <label for="group" class="col-sm-3 control-label">Group</label>
         <div class="col-sm-8">
-          <input class="form-control" type="text" name="groupInput" id="groupInput" :value="plot.group" @keyup.stop="updateField('groupInput', $event.target.value)">
+          <input class="form-control" type="text" name="group" id="group" :value="plot.group" @keyup.stop="updateField('group', $event.target.value)">
         </div>
       </div>
       <div class="form-group">

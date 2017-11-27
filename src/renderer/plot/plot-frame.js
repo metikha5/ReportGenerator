@@ -25,7 +25,7 @@ export default class Plot {
     const ignoreNull = ['group']
 
     let rtn = {
-      title: this.title,
+      title: this.title === null ? '' : this.title.trim(),
       dateBegin: this.dateBegin,
       dateEnd: this.dateEnd,
       curves: this.curves.map((c) => c.toJSON()),

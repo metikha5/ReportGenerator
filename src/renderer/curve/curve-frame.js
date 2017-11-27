@@ -13,15 +13,15 @@ export default class Curve {
   toJSON() {
     const ignoreNull = ['style', 'resample', 'resampleHow']
     let rtn = {
-      title: this.title,
-      x: this.x,
-      y: this.y,
+      title: this.title.trim(),
+      x: this.x.trim(),
+      y: this.y.trim(),
       aggregate: this.aggregate
     }
 
     for (let item of ignoreNull) {
       if (this[item] !== undefined && this[item] !== null && this[item] !== '') {
-        rtn[item] = this[item]
+        rtn[item] = typeof this[item] === 'string' ? this[item].trim() : this[item]
       }
     }
     return rtn

@@ -85,6 +85,9 @@
           let message = code === null ? 'Proccess stopped' : `Process exited with code ${code}`
           this.displayChildMessage('info', message)
           logger.info(`Script execution stopped: ${message}`)
+          if (code === 0) {
+            this.closeModal()
+          }
         })
       },
 

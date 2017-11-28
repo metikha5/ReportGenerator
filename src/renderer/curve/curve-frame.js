@@ -1,5 +1,5 @@
 export default class Curve {
-  constructor(id, title=null, x='date', y=null, aggregate=false, style=null, resample=null, resampleHow=null) {
+  constructor(id, {title=null, x='date', y=null, aggregate=false, style=null, resample=null, resampleHow=null} = {}) {
     this.title = title || 'Unnamed curve'
     this.x = x
     this.y = y || ''

@@ -17,7 +17,7 @@ export default class Plot {
     if (curves) {
       for (let c of curves) {
         const curveId = Curve.defineId(this.curves)
-        this.curves.push(new Curve(curveId, c.title, c.x, c.y, c.aggregate, c.style, c.resample, c.resampleHow))
+        this.curves.push(new Curve(curveId, c))
       }
     }
 

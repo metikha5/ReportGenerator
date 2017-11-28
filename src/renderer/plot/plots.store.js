@@ -75,7 +75,7 @@ export default {
       // Create set of Plot based on a list of objects
       for (let v of payload.rawPlots) {
         const plotId = Plot.defineId(state.plots)
-        state.plots.push(new Plot(plotId, v.title, v.dateBegin, v.dateEnd, v.curves, v.xLabel, v.yLabel, v.group, v.displayLegend, v.legendPosition))
+        state.plots.push(new Plot(plotId, v))
       }
     },
 

@@ -1,7 +1,8 @@
 import Curve from '../curve/curve-frame'
 
 export default class Plot {
-  constructor(id, title=null, dateBegin=null, dateEnd=null, curves=null, xLabel=null, yLabel=null, group=null, displayLegend=true, legendPosition='best') {
+  constructor(id, {title=null, dateBegin=null, dateEnd=null, curves=null, xLabel=null, yLabel=null,
+                   group=null, displayLegend=true, legendPosition='best'} = {}) {
     this.id = id
     this.title = title
     this.dateBegin = typeof dateBegin === 'string' ? new Date(dateBegin) : dateBegin

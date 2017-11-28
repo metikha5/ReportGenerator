@@ -35,7 +35,7 @@
   import EventBus from '../global/event-bus'
   import CurveView from '../curve/curve.vue'
   import PlotView from '../plot/plot'
-  import PythonGenerator from '../build/python-generator'
+  import PythonGenerator from '../generator/python-generator'
 
   export default {
     name: 'BaseView',

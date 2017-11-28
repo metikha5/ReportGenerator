@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <div>
-          <span class="navbar-brand" style="cursor: default">Report generator</span>
+          <router-link :to="{name: 'base'}" class="navbar-brand">Report generator</router-link>
         </div>
       </div>
 

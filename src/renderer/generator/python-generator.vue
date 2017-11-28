@@ -6,7 +6,7 @@
           <div class="modal-container">
 
             <div class="modal-header">
-              <button class="btn btn-default btn-sm" @click="stop">Stop execution</button>
+              <button class="btn btn-default btn-sm" @click="stop" :disabled="!isRunning">Stop execution</button>
               <button type="button" class="close" @click="closeModal"><span>&times;</span></button>
             </div>
 
@@ -39,7 +39,8 @@
         childProccess: null,
         showModal: false,
         output: [],
-        oldLimit: -1
+        oldLimit: -1,
+        isRunning: false
       }
     },
     computed: mapGetters(['pythonPath', 'generatorPath', 'databasePath']),
@@ -48,25 +49,25 @@
     },
     methods: {
       openModal() {
-        if (this.childProccess !== null) {
-          return
-        }
-
-        try {
-          this.run()
-          this.showModal = true
-        } catch (e) {
-          logger.error(`Unknown error openModal python-generator: ${e}`)
+        if (this.childProccess === null && this.isRunning === false) {
+          try {
+            this.run()
+            this.showModal = true
+          } catch (e) {
+            logger.error(`Unknown error openModal python-generator: ${e}`)
+          }
         }
       },
 
       closeModal() {
         this.stop()
         this.showModal = false
+        this.isRunning = false
         this.oldLimit = this.output.length - 1
       },
 
       run() {
+        this.isRunning = true
         this.$notify({group: 'default', title: 'Generator started', text: 'Python generator execution started'})
         logger.info('Python generator execution started')
         this.childProccess = spawn(this.pythonPath, ['-u', this.generatorPath, FileHandler.selectedFile, this.databasePath], {detached: true})
@@ -95,6 +96,7 @@
         if (this.childProccess !== null) {
           this.childProccess.kill()
           this.childProccess = null
+          this.isRunning = false
         }
       },
 

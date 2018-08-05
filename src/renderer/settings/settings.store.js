@@ -45,18 +45,22 @@ export default {
         return false
       }
 
-      sqlite.connect(database)
-      // this is not async
-      let isSqlite = false
-      sqlite.run('PRAGMA schema_version;', res => {
-        if (res[0] !== undefined && res[0].schema_version !== 0) {
-          isSqlite = true
-        }
-      }, err => {
-        logger.error(err)
-        isSqlite = false
-      })
-      return isSqlite
+      try {
+        sqlite.connect(database)
+        // this is not async
+        let isSqlite = false
+        sqlite.run('PRAGMA schema_version;', res => {
+          if (res[0] !== undefined && res[0].schema_version !== 0) {
+            isSqlite = true
+          }
+        }, err => {
+          logger.error(err)
+          isSqlite = false
+        })
+        return isSqlite
+      } catch (e) {
+        return false
+      }
     }
   },
   mutations: {
